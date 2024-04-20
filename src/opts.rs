@@ -52,7 +52,7 @@ pub struct CsvOpts {
 
 #[derive(Debug, Parser)]
 pub struct GenPassOpts {
-    #[arg(long, default_value_t = 16)]
+    #[arg(short, long, default_value_t = 20)]
     pub length: u8,
 
     #[arg(long, default_value_t = true)]
