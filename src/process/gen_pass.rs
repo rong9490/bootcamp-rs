@@ -1,4 +1,5 @@
 use rand::seq::SliceRandom;
+use zxcvbn::zxcvbn;
 
 const UPPER: &[u8] = b"ABCDE";
 const LOWER: &[u8] = b"abcde";
@@ -40,10 +41,18 @@ pub fn process_genpass(
         password.push(*c);
     }
 
-    // 乱序
+    // 洗牌
     password.shuffle(&mut rng);
 
-    println!("{}", String::from_utf8(password)?);
+    let password = String::from_utf8(password)?;
+
+    println!("{}", password);
+
+    // 检验强度
+    let estimate = zxcvbn(&password, &[])?;
+
+    // pipe 到 std::error 里面
+    eprintln!("Strength: {}", estimate.score());
 
     Ok(())
 }
