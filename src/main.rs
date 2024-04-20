@@ -1,39 +1,16 @@
-use anyhow;
-use bootcamp_rs::{process_csv, process_genpass, Opts, SubCommand};
+// 最终命令: rcli csv -i input.csv -o output.json --header -d ','
+
 use clap::Parser;
+use rcli::{CmdExector, Opts}; // 这里的rcli指代的是当前这整个项目
 
-// cargo deny 安装最新版:
-// cargo deny check
-// cargo deny inti
-// 数据结构不同、依赖改变
-// duskdb
-// cargo run -- csv --input assets/juventus.csv
+// 异步运行时
+#[tokio::main]
+async fn main() -> anyhow::Result<()> {
+    // 这个库是什么作用的 ??
+    tracing_subscriber::fmt::init();
 
-// 如何处理header!
-// rdr.reader();
-
-fn main() -> anyhow::Result<()> {
     let opts: Opts = Opts::parse();
-    match opts.cmd {
-        SubCommand::Csv(opts) => {
-            let output = if let Some(output) = opts.output {
-                output.clone()
-            } else {
-                // 需要 std::display
-                format!("output.{}", opts.format)
-            };
 
-            process_csv(&opts.input, output, opts.format)?;
-        }
-
-        // 处理密码分支
-        SubCommand::GenPass(opts) => process_genpass(
-            opts.length,
-            opts.uppercase,
-            opts.lowercase,
-            opts.number,
-            opts.symbol,
-        )?,
-    }
+    opts.cmd.execute().await?;
     Ok(())
 }

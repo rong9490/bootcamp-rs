@@ -1,6 +1,6 @@
 /* genpass基础方法, gen_pass是方法调用 */
 
-use crate::CmdExector; // 可以直接访问 ../lib.rs的内容
+use crate::{process::gen_pass::process_genpass, CmdExector}; // 可以直接访问 ../lib.rs的内容
 use clap::Parser;
 use zxcvbn::zxcvbn;
 
@@ -25,7 +25,7 @@ pub struct GenPassOpts {
 // 为这个结构体实现接口Trait
 impl CmdExector for GenPassOpts {
     async fn execute(self) -> anyhow::Result<()> {
-        let ret = crate::process_genpass(
+        let ret: String = process_genpass(
             self.length,
             self.uppercase,
             self.lowercase,
