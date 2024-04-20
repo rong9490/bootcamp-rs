@@ -1,20 +1,19 @@
 use clap::Parser;
 use csv::Reader;
 use serde::{Deserialize, Serialize};
-use std::path::Path;
+use std::{fs, path::Path};
+use anyhow;
 
 // duskdb
 
 // 定义单位数据结构
 #[derive(Debug, Deserialize, Serialize)]
+#[serde(rename_all = "PascalCase")] // 驼峰命名法? 只需要对不符合的单独rename
 struct Player {
-    #[serde(rename = "Name")]
     name: String,
-    #[serde(rename = "Position")]
     position: String,
     #[serde(rename = "DOB")]
     dob: String, // DateTime<Utc>
-    #[serde(rename = "Nationality")]
     nationality: String,
     #[serde(rename = "Kit Number")]
     kit: u8,
@@ -61,15 +60,31 @@ fn verify_input_file_path(filename: &str) -> Result<String, &'static str> {
     }
 }
 
-fn main() {
+// cargo run -- csv --input assets/juventus.csv
+
+fn main() -> anyhow::Result<()> {
     let opts: Opts = Opts::parse();
     match opts.cmd {
         SubCommand::Csv(opts) => {
             let mut reader = Reader::from_path(opts.input).unwrap();
-            let records = reader
-                .deserialize()
-                .map(|record| record.unwrap())
-                .collect::<Vec<Player>>();
+            let mut ret = Vec::with_capacity(128);
+            for result in reader.deserialize() {
+                let record: Player = result.unwrap();
+                // println!("{:?}", record);
+                ret.push(record);
+            }
+            // 处理成json
+            let json = serde_json::to_string_pretty(&ret)?;
+            fs::write(opts.output, json)?;
+            // let records = reader
+            //     .deserialize()
+            //     // 函数式编程 迭代器可以Map
+            //     // collect 重新组装成Vec
+            //     // 避免使用unwrap
+            //     .map(|record| record.unwrap())
+            //     .collect::<Vec<Player>>();
         }
     }
+
+    Ok(())
 }
