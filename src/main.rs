@@ -2,6 +2,10 @@ use anyhow;
 use bootcamp_rs::{process_csv, Opts, SubCommand};
 use clap::Parser;
 
+// cargo deny 安装最新版:
+// cargo deny check
+// cargo deny inti
+// 数据结构不同、依赖改变
 // duskdb
 // cargo run -- csv --input assets/juventus.csv
 
