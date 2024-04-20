@@ -1,60 +1,75 @@
+use clap::Parser;
+use csv::Reader;
+use serde::{Deserialize, Serialize};
 use std::path::Path;
 
-use clap::{Parser, Subcommand};
+// duskdb
 
-// 需要我们创建一个struct 承载我们的应用参数
-
-// 最终命令: rcli csv -i input.csv -o output.json --header -d ','
-
-#[derive(Debug, Parser)] // 属性宏, 自动展开 clap::Parser trait
-#[command(name = "rcli", version, author, about, long_about = None)] // 提供元信息, cargo.toml里面取
-struct Opts {
-    #[command(subcommand)]
-    cmd: Subcommand,
-    // #[arg(short)]
-    // name: String,
-    // name2: String,
-
-    // #[arg(short, long)] // 配置命令行参数的元信息
-    // age: Option<i8>,
+// 定义单位数据结构
+#[derive(Debug, Deserialize, Serialize)]
+struct Player {
+    #[serde(rename = "Name")]
+    name: String,
+    #[serde(rename = "Position")]
+    position: String,
+    #[serde(rename = "DOB")]
+    dob: String, // DateTime<Utc>
+    #[serde(rename = "Nationality")]
+    nationality: String,
+    #[serde(rename = "Kit Number")]
+    kit: u8,
 }
 
-// 目前只支持这一个subCommand, 后续可以拓展
+/// 陈天, Rust训练营
 #[derive(Debug, Parser)]
-enum Subcommand {
-    #[command(name = "csv", about = "Convert CSV to json")]
+#[command(name = "rcli", author = "Tiger", version, about, long_about = None)]
+struct Opts {
+    #[command(subcommand)]
+    cmd: SubCommand,
+}
+
+/// 这里枚举可以平行拓展多种sub命令
+/// 每一种都是一种结构体struct, 包含具体的所有操作
+#[derive(Debug, Parser)]
+enum SubCommand {
+    // 注意这里的csv 副命令的名称
+    #[command(name = "csv", about = "Show CSV")]
     Csv(CsvOpts),
 }
 
-#[derive(Debug, Parser)]
+#[derive(Debug, Parser)] // 也必须使用Parser
 struct CsvOpts {
-    #[arg(short, long, value_parser = verify_input_file)]
-    input: String, // 没有缺省值, 必传  合法性检查(文件是否存在)
+    #[arg(short, long, value_parser = verify_input_file_path)]
+    input: String,
 
     #[arg(short, long, default_value = "output.json")]
-    // default_value: from trait 实现了: "output.json".into()
     output: String,
 
-    #[arg(short, long, default_value_t = ',')] // 单引号
+    #[arg(short, long, default_value_t = ',')]
     delimiter: char,
 
-    #[arg(short = 'h', long, default_value_t = true)] // default_value_t
+    // 这里的short为 -h 与 --help的冲突了, 取消掉
+    #[arg(long, default_value_t = true)]
     header: bool,
 }
 
-fn verify_input_file(filename: &str) -> Result<String, &'static str> {
-    // 该路径的文件存在不
+fn verify_input_file_path(filename: &str) -> Result<String, &'static str> {
     if Path::new(filename).exists() {
         Ok(filename.into())
     } else {
-        // Err("file not exists".into())
-        Err("file not exists") // 静态版本, 字面量字符串, 进程相同static
+        Err("File does not exist")
     }
 }
 
 fn main() {
-    let cli: Opts = Opts::parse();
-    println!("{:?}", cli);
-    // println!("name2: {}", cli.name2);
-    // println!("age: {:?}", cli.age);
+    let opts: Opts = Opts::parse();
+    match opts.cmd {
+        SubCommand::Csv(opts) => {
+            let mut reader = Reader::from_path(opts.input).unwrap();
+            let records = reader
+                .deserialize()
+                .map(|record| record.unwrap())
+                .collect::<Vec<Player>>();
+        }
+    }
 }
