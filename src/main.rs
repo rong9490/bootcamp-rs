@@ -1,5 +1,5 @@
 use anyhow;
-use bootcamp_rs::{process_csv, Opts, SubCommand};
+use bootcamp_rs::{process_csv, process_genpass, Opts, SubCommand};
 use clap::Parser;
 
 // cargo deny 安装最新版:
@@ -25,6 +25,15 @@ fn main() -> anyhow::Result<()> {
 
             process_csv(&opts.input, output, opts.format)?;
         }
+
+        // 处理密码分支
+        SubCommand::GenPass(opts) => process_genpass(
+            opts.length,
+            opts.uppercase,
+            opts.lowercase,
+            opts.number,
+            opts.symbol,
+        )?,
     }
     Ok(())
 }

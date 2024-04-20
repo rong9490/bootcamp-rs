@@ -18,6 +18,9 @@ pub enum SubCommand {
     // 注意这里的csv 副命令的名称
     #[command(name = "csv", about = "Show CSV")]
     Csv(CsvOpts),
+
+    #[command(name = "genpass")] // 输入 genpass 进入子分支
+    GenPass(GenPassOpts),
 }
 
 // 输出的格式枚举: 暂时支持3中格式
@@ -45,6 +48,24 @@ pub struct CsvOpts {
     // 这里的short为 -h 与 --help的冲突了, 取消掉
     #[arg(long, default_value_t = true)]
     pub header: bool,
+}
+
+#[derive(Debug, Parser)]
+pub struct GenPassOpts {
+    #[arg(long, default_value_t = 16)]
+    pub length: u8,
+
+    #[arg(long, default_value_t = true)]
+    pub uppercase: bool,
+
+    #[arg(long, default_value_t = true)]
+    pub lowercase: bool,
+
+    #[arg(long, default_value_t = true)]
+    pub number: bool,
+
+    #[arg(long, default_value_t = true)]
+    pub symbol: bool,
 }
 
 fn verify_input_file_path(filename: &str) -> Result<String, &'static str> {
