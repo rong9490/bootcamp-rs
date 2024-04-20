@@ -1,7 +1,10 @@
 use anyhow;
 use csv::Reader;
 use serde::{Deserialize, Serialize};
+use serde_json::Value;
 use std::fs;
+
+use crate::opts::OutputFormat;
 
 // 定义单位数据结构
 #[derive(Debug, Deserialize, Serialize)]
@@ -16,7 +19,7 @@ struct Player {
     kit: u8,
 }
 
-pub fn process_csv(input: &str, output: &str) -> anyhow::Result<()> {
+pub fn process_csv(input: &str, output: String, format: OutputFormat) -> anyhow::Result<()> {
     let mut reader = Reader::from_path(input)?;
     let mut ret = Vec::with_capacity(128);
 
@@ -38,16 +41,27 @@ pub fn process_csv(input: &str, output: &str) -> anyhow::Result<()> {
             .iter()
             .zip(record.iter())
             .collect::<serde_json::Value>();
+        // let iter = headers.iter().zip(record.iter());
+
+        // // TODO 这里需要不同的处理
+        // let json_value = match format {
+        //     OutputFormat::Json => iter.collect::<Value>(),
+        //     OutputFormat::Yaml => todo!(),
+        //     OutputFormat::Toml => todo!(),
+        // };
 
         // 如果for循环还是要用zip: 麻烦
 
         ret.push(json_value);
     }
 
-    // let content = match format {}
+    // HACK 对应不同的具体格式化
+    let content = match format {
+        OutputFormat::Json => serde_json::to_string_pretty(&ret)?,
+        OutputFormat::Yaml => serde_yaml::to_string(&ret)?,
+        OutputFormat::Toml => toml::to_string(&ret)?, // 暂不支持toml
+    };
 
-    // 处理成json
-    let json = serde_json::to_string_pretty(&ret)?;
-    fs::write(output, json)?;
+    fs::write(output, content)?;
     Ok(())
 }

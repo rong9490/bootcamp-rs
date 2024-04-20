@@ -16,16 +16,15 @@ fn main() -> anyhow::Result<()> {
     let opts: Opts = Opts::parse();
     match opts.cmd {
         SubCommand::Csv(opts) => {
-            return process_csv(&opts.input, &opts.output);
-            // let records = reader
-            //     .deserialize()
-            //     // 函数式编程 迭代器可以Map
-            //     // collect 重新组装成Vec
-            //     // 避免使用unwrap
-            //     .map(|record| record.unwrap())
-            //     .collect::<Vec<Player>>();
+            let output = if let Some(output) = opts.output {
+                output.clone()
+            } else {
+                // 需要 std::display
+                format!("output.{}", opts.format)
+            };
+
+            process_csv(&opts.input, output, opts.format)?;
         }
     }
-
-    // Ok(())
+    Ok(())
 }
