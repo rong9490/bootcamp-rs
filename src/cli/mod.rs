@@ -1,5 +1,10 @@
 mod utils;
 mod csv;
+mod base64;
+
+// 对外暴露使用
+pub use self::{csv::*, utils::*};
+
 
 // mod genpass;
 
