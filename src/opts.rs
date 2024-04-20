@@ -1,6 +1,6 @@
-use std::path::Path;
-
+use anyhow;
 use clap::Parser;
+use std::{path::Path, str::FromStr};
 
 /// 陈天, Rust训练营
 #[derive(Debug, Parser)]
@@ -19,6 +19,14 @@ pub enum SubCommand {
     Csv(CsvOpts),
 }
 
+// 输出的格式枚举: 暂时支持3中格式
+#[derive(Debug, Clone, Copy)]
+pub enum OutputFormat {
+    Json,
+    Yaml,
+    Toml,
+}
+
 #[derive(Debug, Parser)] // 也必须使用Parser
 pub struct CsvOpts {
     #[arg(short, long, value_parser = verify_input_file_path)]
@@ -26,6 +34,9 @@ pub struct CsvOpts {
 
     #[arg(short, long, default_value = "output.json")]
     pub output: String,
+
+    #[arg(short, long, value_parser = parse_format, default_value = "json")]
+    pub format: OutputFormat, // 转换成的输出数据格式, 默认是json
 
     #[arg(short, long, default_value_t = ',')]
     pub delimiter: char,
@@ -42,3 +53,42 @@ fn verify_input_file_path(filename: &str) -> Result<String, &'static str> {
         Err("File does not exist")
     }
 }
+
+// 对输入的格式进行匹配校验
+fn parse_format(format: &str) -> Result<OutputFormat, anyhow::Error> {
+    // parse 自动调用from_str
+    format.parse::<OutputFormat>()
+    // match format.to_lowercase().as_str() {
+    //     "json" => Ok(OutputFormat::Json),
+    //     "yaml" => Ok(OutputFormat::Yaml),
+    //     "toml" => Ok(OutputFormat::Toml),
+    //     _ => Err("Invalid format"),
+    // }
+}
+
+// TODO 理解这行代码是什么意思
+impl From<OutputFormat> for &'static str {
+    fn from(value: OutputFormat) -> Self {
+        match value {
+            OutputFormat::Json => "json",
+            OutputFormat::Yaml => "yaml",
+            OutputFormat::Toml => "toml",
+        }
+    }
+}
+
+// TODO 理解这行代码是什么意思
+impl FromStr for OutputFormat {
+    type Err = anyhow::Error;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "json" => Ok(OutputFormat::Json),
+            "yaml" => Ok(OutputFormat::Yaml),
+            "toml" => Ok(OutputFormat::Toml),
+            _ => Err(anyhow::anyhow!("Invalid format!")),
+        }
+    }
+}
+
+// Path: src/process.rs

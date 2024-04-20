@@ -9,6 +9,9 @@ use clap::Parser;
 // duskdb
 // cargo run -- csv --input assets/juventus.csv
 
+// 如何处理header!
+// rdr.reader();
+
 fn main() -> anyhow::Result<()> {
     let opts: Opts = Opts::parse();
     match opts.cmd {
