@@ -1,10 +1,16 @@
-mod utils;
-mod csv;
-mod base64;
+mod entry;
 
-// 对外暴露使用
-pub use self::{csv::*, utils::*};
 
+pub use self::{entry::*};
+
+// mod base64;
+// mod csv;
+// mod text;
+// mod utils;
+
+// use self::text::{TextSignFormat, TextSubCommand};
+// // 对外暴露使用
+// pub use self::{csv::*, utils::*, text::*};
 
 // mod genpass;
 
@@ -27,4 +33,7 @@ pub use self::{csv::*, utils::*};
 // pub enum SubCommand {
 //     #[command(name = "csv", about = "use CSV")]
 //     Csv(CsvOpts), // CsvOpts 具体的详细指令在单独的mod里面处理
+
+//     #[command(subcommand)]
+//     Text(TextSubCommand), // 单独处理所有的加解密
 // }

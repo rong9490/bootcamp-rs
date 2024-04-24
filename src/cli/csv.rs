@@ -69,7 +69,7 @@ impl FromStr for OutputFormat {
     }
 }
 
-// 这个实现Display没看懂?
+// 这个实现Display 可输出
 impl fmt::Display for OutputFormat {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{}", Into::<&str>::into(*self))
