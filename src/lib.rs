@@ -1,4 +1,5 @@
 pub mod cli;
+pub mod process;
 pub mod utils;
 
 // mod process;
@@ -14,3 +15,8 @@ pub mod utils;
 // pub trait CmdExector {
 //     async fn execute(self) -> anyhow::Result<()>;
 // }
+
+#[allow(async_fn_in_trait)]
+pub trait CmdExector {
+    async fn execute(self) -> anyhow::Result<()>;
+}

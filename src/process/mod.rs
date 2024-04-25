@@ -2,6 +2,6 @@
 // pub mod gen_pass;
 // pub mod text;
 
-mod genpass;
+// mod genpass;
 
 pub mod genpass;

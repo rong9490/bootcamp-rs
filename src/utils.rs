@@ -1,5 +1,4 @@
 use anyhow::Result;
-use enum_dispatch::enum_dispatch;
 use std::{fs::File, io::Read};
 
 // "_" 特殊处理:
@@ -20,9 +19,9 @@ pub fn get_content(input: &str) -> Result<Vec<u8>> {
     Ok(buf)
 }
 
-// 执行器Trait
-#[allow(async_fn_in_trait)]
-#[enum_dispatch]
-pub trait CmdExector {
-    async fn execute(self) -> anyhow::Result<()>;
-}
+// // 执行器Trait
+// #[allow(async_fn_in_trait)]
+// #[enum_dispatch]
+// pub trait CmdExector {
+//     async fn execute(self) -> anyhow::Result<()>;
+// }
