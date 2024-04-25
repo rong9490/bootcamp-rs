@@ -1,10 +1,9 @@
-/* genpass基础方法, gen_pass是方法调用 */
-
-use crate::{process::gen_pass::process_genpass, CmdExector}; // 可以直接访问 ../lib.rs的内容
 use clap::Parser;
-use zxcvbn::zxcvbn;
+use crate::utils::CmdExector;
 
 #[derive(Debug, Parser)]
+// (副命令)案例一: 密码生成器
+// 命令: cargo run genpass --length 50
 pub struct GenPassOpts {
     #[arg(short, long, default_value_t = 20)]
     pub length: u8,
@@ -22,22 +21,9 @@ pub struct GenPassOpts {
     pub symbol: bool,
 }
 
-// 为这个结构体实现接口Trait
+// 为GenPassOpts这个静态的结构体, 实现CmdExector这个Trait接口方法
 impl CmdExector for GenPassOpts {
     async fn execute(self) -> anyhow::Result<()> {
-        let ret: String = process_genpass(
-            self.length,
-            self.uppercase,
-            self.lowercase,
-            self.number,
-            self.symbol,
-        )?; // 为什么这样调用
-        println!("{}", ret);
-
-        // output password strength in stderr
-        let estimate = zxcvbn(&ret, &[])?;
-        eprintln!("strength: {}", estimate.score());
-
-        Ok(())
+        todo!()
     }
 }

@@ -1,7 +1,7 @@
 mod entry;
+mod genpass;
 
-
-pub use self::{entry::*};
+pub use self::entry::*;
 
 // mod base64;
 // mod csv;
