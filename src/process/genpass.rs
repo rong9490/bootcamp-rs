@@ -1,9 +1,6 @@
 use rand::{seq::SliceRandom, thread_rng};
 
-// HACK 大概考虑到 分离具体的调用执行, 放到 process 里面
-
 // 具体的调用执行内容
-
 const UPPER: &[u8] = b"ABCDEFGHJKLMNPQRSTUVWXYZ";
 const LOWER: &[u8] = b"abcdefghijkmnpqrstuvwxyz";
 const NUMBER: &[u8] = b"123456789";
@@ -44,6 +41,7 @@ pub fn process_genpass(
       password.push(*c);
     }
 
+    // 乱序洗牌
     password.shuffle(&mut rng);
     let password: String = String::from_utf8(password)?;
     Ok(password)

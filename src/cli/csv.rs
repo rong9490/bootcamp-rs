@@ -15,7 +15,7 @@ pub enum OutputFormat {
 
 #[derive(Debug, Parser)]
 pub struct CsvOpts {
-    #[arg(short, long, value_parser = verify_file)] // 文件名需要验证存在
+    #[arg(short, long, value_parser = verify_file, default_value = "./assets/juventus.csv")] // 文件名需要验证存在
     pub input: String,
 
     #[arg(short, long)]
@@ -40,6 +40,7 @@ impl CmdExector for CsvOpts {
     }
 }
 
+// HACK 理解以下的方法 parse / from
 // 从字符串, 格式化提取出枚举类型
 fn parse_format(format: &str) -> Result<OutputFormat, anyhow::Error> {
     // 这里为什么字符串执行parse就可以了呢, 我们需要自定义 "parse" / "from" 这一对行为

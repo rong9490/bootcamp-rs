@@ -1,7 +1,7 @@
 use crate::cli::csv::OutputFormat;
 use anyhow;
 use csv::{Reader, StringRecord};
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Serialize}; // 序列化与反序列化
 use std::fs;
 
 /* 定义一行(单位)数据结构 */
@@ -17,7 +17,7 @@ struct Player {
     kit: u8,
 }
 
-/* 正式: 执行数据转换 */
+/* 正式: 执行数据转换(核心Serde) */
 pub fn process_csv(input: &str, output: String, format: OutputFormat) -> anyhow::Result<()> {
     // 创建文件的读取器
     let mut reader = Reader::from_path(input)?;
@@ -49,6 +49,6 @@ pub fn process_csv(input: &str, output: String, format: OutputFormat) -> anyhow:
 
     // 最终写入文件
     fs::write(output, content)?;
-    println!("完成转换文件写入, 格式 = {}", format);
+    println!("完成转换文件写入: 格式 = {}", format);
     Ok(())
 }
