@@ -25,6 +25,8 @@ pub(crate) fn verify_path(path: &str) -> Result<PathBuf, String> {
     }
 }
 
+// 养成习惯, 要配套测试用例
+
 #[cfg(test)]
 mod tests {
     use super::*;

@@ -5,6 +5,7 @@ use enum_dispatch::enum_dispatch;
 use cli::genpass::GenPassOpts;
 use cli::entry::SubCommand;
 use cli::csv::CsvOpts;
+use cli::base64::{Base64SubCommand, Base64EncodeOpts, Base64DecodeOpts};
 
 // pub use cli
 

@@ -6,3 +6,4 @@
 
 pub mod genpass;
 pub mod csv_convert;
+pub mod b64;

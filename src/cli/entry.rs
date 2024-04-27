@@ -1,34 +1,8 @@
-// use clap::Parser;
-
-// #[derive(Debug, Parser)]
-// #[command(name = "rcli")]
-// pub struct Opts {
-//     #[command(subcommand)]
-//     pub cmd: SubCommand,
-// }
-
-// #[derive(Debug, Parser)]
-// pub enum SubCommand {
-//     #[command()]
-//     Csv(CsvOpts),
-// }
-
-// #[derive(Debug, Parser)]
-// pub struct CsvOpts {
-//     #[arg(short, long)] // 文件名需要验证存在
-//     pub input: String,
-
-//     #[arg(short, long)] // "output.json".into()
-//     pub output: Option<String>, // 表示可选吗?
-
-//                                 // #[arg(long, value_parser = parse_format, default_value = "json")]
-//                                 // pub format: OutputFormat,
-// }
-
-use super::genpass::GenPassOpts;
 use super::csv::CsvOpts;
+use super::genpass::GenPassOpts;
 use clap::Parser;
 use enum_dispatch::enum_dispatch;
+use super::base64::Base64SubCommand;
 
 /// 陈天Rust训练营 01_rcli
 #[derive(Debug, Parser)]
@@ -42,9 +16,12 @@ pub struct Opts {
 #[derive(Debug, Parser)]
 #[enum_dispatch(CmdExector)]
 pub enum SubCommand {
-    #[command(name = "csv", about = "Generate a random password")]
+    #[command(name = "csv", about = "转换csv文件")]
     Csv(CsvOpts), // "CSV读取"
 
-    #[command(name = "genpass", about = "Generate a random password")]
+    #[command(name = "genpass", about = "密码生成器")]
     GenPass(GenPassOpts), // "密码生成" 具体的内容单独维护
+
+    // #[command(subcommand)]
+    // Base64(Base64SubCommand), // 注意: 这里多嵌套了一层, CmdExector 如何处理
 }

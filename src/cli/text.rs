@@ -1,4 +1,5 @@
-/* Target 当前目标把这个文件耐心写完 */
+/* "密码生成" 副命令集群 */
+// 命令: cargo run genpass --length 50
 
 use super::verify_file;
 use clap::Parser;
