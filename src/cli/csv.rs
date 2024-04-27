@@ -1,7 +1,7 @@
-/* Csv(CsvOpts) 的具体"副命令群"的实现 */
-
-use super::utils::verify_file; // utils里面必须 pub(crate) 才能引入
-use crate::{csv_convert::process_csv, CmdExector};
+/* "CSV" 副命令集群 */
+// 命令: cargo run csv --input ./assets/juventus.csv
+use super::utils::verify_file;
+use crate::{process::csv_convert::process_csv, CmdExector};
 use clap::Parser;
 use core::fmt;
 use std::str::FromStr;
@@ -13,30 +13,29 @@ pub enum OutputFormat {
     Yaml,
 }
 
-// 这个分支下, 所有的具体参数
 #[derive(Debug, Parser)]
 pub struct CsvOpts {
     #[arg(short, long, value_parser = verify_file)] // 文件名需要验证存在
     pub input: String,
 
-    #[arg(short, long)] // "output.json".into()
-    pub output: Option<String>, // 表示可选吗?
+    #[arg(short, long)]
+    pub output: Option<String>, // 表示可选
 
     #[arg(long, value_parser = parse_format, default_value = "json")]
     pub format: OutputFormat,
 }
 
-/* 这里是添加这个 副命令的 "执行方法" */
+// 为该结构体实现trait:
 impl CmdExector for CsvOpts {
     async fn execute(self) -> anyhow::Result<()> {
-        // 处理输出文件名, 没有则用默认的
-        let output = if let Some(output) = self.output {
+        // 处理输出文件名, 没有则用默认的(为什么不直接用"output.json".into()? 因为文件格式是动态的)
+        let output: String = if let Some(output) = self.output {
             output
         } else {
             format!("output.{}", self.format)
         };
 
-        // 正式执行转换!
+        // 正式执行转换(serde)
         process_csv(&self.input, output, self.format)
     }
 }

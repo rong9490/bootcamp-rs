@@ -26,6 +26,7 @@
 // }
 
 use super::genpass::GenPassOpts;
+use super::csv::CsvOpts;
 use clap::Parser;
 use enum_dispatch::enum_dispatch;
 
@@ -37,9 +38,13 @@ pub struct Opts {
     pub cmd: SubCommand,
 }
 
+// 枚举: 同一时间只存在一种情况
 #[derive(Debug, Parser)]
 #[enum_dispatch(CmdExector)]
 pub enum SubCommand {
+    #[command(name = "csv", about = "Generate a random password")]
+    Csv(CsvOpts), // "CSV读取"
+
     #[command(name = "genpass", about = "Generate a random password")]
-    GenPass(GenPassOpts),
+    GenPass(GenPassOpts), // "密码生成" 具体的内容单独维护
 }

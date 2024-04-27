@@ -4,6 +4,7 @@ pub mod utils;
 use enum_dispatch::enum_dispatch;
 use cli::genpass::GenPassOpts;
 use cli::entry::SubCommand;
+use cli::csv::CsvOpts;
 
 // pub use cli
 

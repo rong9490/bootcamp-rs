@@ -1,12 +1,13 @@
+/* "密码生成" 副命令集群 */
+// 命令: cargo run genpass --length 50
 use crate::{process::genpass::process_genpass, CmdExector};
 use clap::Parser;
-use zxcvbn::zxcvbn;
+use zxcvbn::{zxcvbn, Entropy};
 
 #[derive(Debug, Parser)]
 // (副命令)案例一: 密码生成器
-// 命令: cargo run genpass --length 50
 pub struct GenPassOpts {
-    #[arg(short, long, default_value_t = 20)]
+    #[arg(short, long, default_value_t = 30)]
     pub length: u8,
 
     #[arg(long, default_value_t = true)]
@@ -33,11 +34,9 @@ impl CmdExector for GenPassOpts {
             self.number,
             self.symbol,
         )?;
-
         println!("密码生成器 {}", password);
 
         let score: u8 = self.score(password)?;
-
         println!("密码得分 {}", score);
         Ok(())
     }
@@ -45,7 +44,7 @@ impl CmdExector for GenPassOpts {
 
 impl GenPassOpts {
     fn score(self, password: String) -> anyhow::Result<u8> {
-        let estimate = zxcvbn(&password, &[])?;
+        let estimate: Entropy = zxcvbn(&password, &[])?;
         let score: u8 = estimate.score();
         Ok(score)
     }

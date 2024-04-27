@@ -1,13 +1,12 @@
-/* 通用方法 */
-
 use std::path::{Path, PathBuf};
 
-pub(crate) fn verify_file(filename: &str) -> Result<String, String> {
+// 检查文件存在合法性
+pub fn verify_file(filename: &str) -> Result<String, String> {
     // if input is "-" or file exists
     if filename == "-" || Path::new(filename).exists() {
         Ok(filename.into())
     } else {
-        Err(format!("File does not exist: {}", filename)) // HACK 感觉可以封装所有的错误类型及其行为
+        Err(format!("File does not exist: {}", filename))
     }
 }
 

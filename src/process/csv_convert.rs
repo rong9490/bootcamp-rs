@@ -1,10 +1,10 @@
-use crate::cli::OutputFormat;
+use crate::cli::csv::OutputFormat;
 use anyhow;
 use csv::{Reader, StringRecord};
 use serde::{Deserialize, Serialize};
 use std::fs;
 
-/* 定义单位数据结构 */
+/* 定义一行(单位)数据结构 */
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(rename_all = "PascalCase")] // 驼峰命名法, 只需要对不符合的单独rename
 struct Player {
@@ -49,5 +49,6 @@ pub fn process_csv(input: &str, output: String, format: OutputFormat) -> anyhow:
 
     // 最终写入文件
     fs::write(output, content)?;
+    println!("完成转换文件写入, 格式 = {}", format);
     Ok(())
 }
