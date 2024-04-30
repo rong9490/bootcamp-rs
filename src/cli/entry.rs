@@ -22,6 +22,6 @@ pub enum SubCommand {
     #[command(name = "genpass", about = "密码生成器")]
     GenPass(GenPassOpts), // "密码生成" 具体的内容单独维护
 
-    // #[command(subcommand)]
-    // Base64(Base64SubCommand), // 注意: 这里多嵌套了一层, CmdExector 如何处理
+    #[command(subcommand)]
+    Base64(Base64SubCommand), // 注意: 这里多嵌套了一层, CmdExector 如何处理
 }

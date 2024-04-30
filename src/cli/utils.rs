@@ -11,7 +11,6 @@ pub fn verify_file(filename: &str) -> Result<String, String> {
 }
 
 // 这里path是指文件目录(Folder)
-// TODO 这里返回错误信息  &'static str 还是 String 有多大区别
 pub(crate) fn verify_path(path: &str) -> Result<PathBuf, String> {
     // if input is "-" or file exists
     let p: &Path = Path::new(path);
