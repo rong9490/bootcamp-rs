@@ -1,23 +1,11 @@
-// use clap::Parser;
-// use rcli::cli::entry::Opts;
-// use rcli::CmdExector; // 这里必须明确导出, 否则识别不了execute
-
-// #[tokio::main]
-// async fn main() -> anyhow::Result<()> {
-//     tracing_subscriber::fmt::init();
-//     let opts: Opts = Opts::parse();
-//     println!("{:?}", opts);
-//     opts.cmd.execute().await?;
-//     Ok(())
-// }
-
-// rcli csv -i
-
 use clap::Parser;
+use csv::Reader; // serde
+use serde::{Deserialize, Serialize};
+use std::path::Path;
 
 // 引入clap的命令解析宏, 配置其字段及行为
 #[derive(Debug, Parser)]
-#[command(name = "rcli", version, author, about, long_about = None)]
+#[command(name = "tiger-cli", version, author, about, long_about = None)]
 struct Opts {
     #[command(subcommand)]
     cmd: SubCommand, // 二级嵌套的命令结构: 是个枚举类型
@@ -29,10 +17,10 @@ enum SubCommand {
     Csv(CsvOpts),
 }
 
-#[derive(Debug, Parser)] 
+#[derive(Debug, Parser)]
 struct CsvOpts {
-    #[arg(short, long)]
-    input: String,
+    #[arg(short, long, value_parser = verify_input_file)]
+    input: String, // 合法性的检查! value_parser
 
     #[arg(short, long, default_value = "output.json")] // "output.json".into()
     output: String,
@@ -44,6 +32,38 @@ struct CsvOpts {
     header: bool,
 }
 
+// 验证文件是否存在
+fn verify_input_file(filename: &str) -> Result<String, &'static str> {
+    let exists: bool = Path::new(filename).exists();
+    if exists {
+        Ok(filename.into())
+    } else {
+        Err("文件不存在!")
+    }
+}
+
+#[derive(Debug, Deserialize, Serialize)]
+struct Player {
+    name: String,
+    position: String,
+    dob: String,
+    nationality: String,
+    kit: u8,
+}
+
 fn main() {
-    println!("Hello, rust!");
+    // 执行: cargo run -- csv --input test.cvs
+    let opts: Opts = Opts::parse();
+    println!("{:?}", opts);
+
+    match opts.cmd {
+        SubCommand::Csv(opts) => {
+            let mut reader = Reader::from_path(opts.input).unwrap();
+            let records = reader
+                .deserialize()
+                .map(|record| record.unwrap())
+                .collect::<Vec<Player>>();
+            print!("{:?}", records);
+        }
+    }
 }

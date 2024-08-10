@@ -739,27 +739,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "rcli"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "base64",
- "blake3",
- "clap",
- "csv",
- "ed25519-dalek",
- "enum_dispatch",
- "rand",
- "serde",
- "serde_json",
- "serde_yaml",
- "tokio",
- "toml",
- "tracing-subscriber",
- "zxcvbn",
-]
-
-[[package]]
 name = "regex"
 version = "1.10.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -986,6 +965,27 @@ checksum = "8b9ef9bad013ada3808854ceac7b46812a6465ba368859a37e2100283d2d719c"
 dependencies = [
  "cfg-if",
  "once_cell",
+]
+
+[[package]]
+name = "tiger-cli"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "base64",
+ "blake3",
+ "clap",
+ "csv",
+ "ed25519-dalek",
+ "enum_dispatch",
+ "rand",
+ "serde",
+ "serde_json",
+ "serde_yaml",
+ "tokio",
+ "toml",
+ "tracing-subscriber",
+ "zxcvbn",
 ]
 
 [[package]]
