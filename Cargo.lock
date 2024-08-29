@@ -968,7 +968,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "tiger-cli"
+name = "tiger"
 version = "0.1.0"
 dependencies = [
  "anyhow",

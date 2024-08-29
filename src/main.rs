@@ -1,7 +1,8 @@
-use tiger_cli::csv_cli::usage_csv_cli;
+// https://github.com/tyr-rust-bootcamp
 
-fn main() -> anyhow::Result<()> {
-    let _ = usage_csv_cli();
+use tiger::first_section::csv_cli::major::major;
 
-    Ok(()) // 配合anyhow::Result<()>
+fn main() {
+    println!("Hello, world!");
+    major();
 }
