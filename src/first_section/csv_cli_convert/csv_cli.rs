@@ -1,14 +1,15 @@
 // 处理命令行相关内容
 
+use super::data::Player;
 use super::utils::verify_input_file;
 use clap::Parser;
 use csv::Reader;
-use super::data::Player;
+use std::fs;
 
 #[derive(Debug, Parser)]
 #[command(author, version, about, long_about = None)]
 pub struct Opts {
-    #[command(subcommand)] // 子命令
+    #[command(subcommand)] // 副命令
     pub command: SubCommand,
 }
 
@@ -34,8 +35,8 @@ pub struct CsvOpts {
     pub header: bool,
 }
 
-// 处理csv副命令
-pub fn process_csv(input: &str, _output: &str) -> anyhow::Result<()> {
+// 处理csv副命令, 流程
+pub fn process_csv(input: &str, output: &str) -> anyhow::Result<()> {
     let mut reader = Reader::from_path(input)?;
 
     // 1. 迭代器 + 闭包
@@ -49,11 +50,10 @@ pub fn process_csv(input: &str, _output: &str) -> anyhow::Result<()> {
         let player: Player = record?;
         vec_player2.push(player);
     }
-    let json: String = serde_json::to_string_pretty(&vec_player)?;
-    let json2: String = serde_json::to_string_pretty(&vec_player2)?;
 
-    // fs::write(opts.output, json); // => ()
-    // fs::write(opts.output, json2);
-    assert_eq!(json, json2); // => Result<()>
+    // 处理成json文件
+    let json: String = serde_json::to_string_pretty(&vec_player)?;
+    fs::write(output, json)?;
+
     Ok(())
 }

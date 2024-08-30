@@ -1,8 +1,8 @@
 // https://github.com/tyr-rust-bootcamp
 
-use tiger::first_section::csv_cli_convert::major::major;
+use tiger::first_section::csv_cli_convert::major::major as major_csv;
 
-fn main() {
-    // println!("Hello, world!");
-    major();
+fn main() -> anyhow::Result<()> {
+    major_csv()?;
+    Ok(())
 }
