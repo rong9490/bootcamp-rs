@@ -40,8 +40,11 @@ pub struct CsvOpts {
     pub header: bool,
 }
 
+// cargo run -- csv --input assets/juventus.csv --output output.json --delimiter ',' --header true
+// cargo run -- csv --input assets/juventus.csv
+
 // 处理csv副命令, 流程
-pub fn process_csv(input: &str, output: String, format: OutputFormat) -> anyhow::Result<()> {
+pub fn major_clap_csv(input: &str, output: String, format: OutputFormat) -> anyhow::Result<()> {
     let mut reader = Reader::from_path(input)?;
 
     // 1. 迭代器 + 闭包
@@ -68,7 +71,7 @@ pub fn process_csv(input: &str, output: String, format: OutputFormat) -> anyhow:
     let content: String = match format {
         OutputFormat::Json => serde_json::to_string_pretty(&vec_player)?,
         OutputFormat::Yaml => serde_yaml::to_string(&vec_player)?,
-        OutputFormat::Toml => toml::to_string(&vec_player)?,
+        // OutputFormat::Toml => toml::to_string(&vec_player)?,
     };
 
     // 最后, 写入文件

@@ -6,7 +6,6 @@ use std::{fmt, str::FromStr};
 pub enum OutputFormat {
     Json,
     Yaml,
-    Toml,
 }
 
 // (类型收窄)将输入的字符串转换为枚举类型
@@ -20,22 +19,10 @@ impl From<OutputFormat> for &'static str {
         match format {
             OutputFormat::Json => "json",
             OutputFormat::Yaml => "yaml",
-            OutputFormat::Toml => "toml",
+            // OutputFormat::Toml => "toml",
         }
     }
 }
-
-// 将 '字符串' 转为 '枚举类型'
-// impl From<&str> for OutputFormat {
-//     fn from(format: &str) -> Self {
-//         match format.to_lowercase().as_str() {
-//             "json" => OutputFormat::Json,
-//             "yaml" => OutputFormat::Yaml,
-//             "toml" => OutputFormat::Toml,
-//             _ => unreachable!(),
-//         }
-//     }
-// }
 
 // parse 方法需要实现FromStr trait
 impl FromStr for OutputFormat {
@@ -45,7 +32,7 @@ impl FromStr for OutputFormat {
         match value.to_lowercase().as_str() {
             "json" => Ok(OutputFormat::Json),
             "yaml" => Ok(OutputFormat::Yaml),
-            "toml" => Ok(OutputFormat::Toml),
+            // "toml" => Ok(OutputFormat::Toml),
             v => anyhow::bail!("不支持的输出格式: {}", v),
             // _ => unreachable!(),
         }

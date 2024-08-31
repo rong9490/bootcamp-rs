@@ -18,7 +18,7 @@ struct Player {
 }
 
 /* 正式: 执行数据转换(核心Serde) */
-pub fn process_csv(input: &str, output: String, format: OutputFormat) -> anyhow::Result<()> {
+pub fn major_clap_csv(input: &str, output: String, format: OutputFormat) -> anyhow::Result<()> {
     // 创建文件的读取器
     let mut reader = Reader::from_path(input)?;
 

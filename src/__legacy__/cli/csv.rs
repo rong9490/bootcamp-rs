@@ -1,7 +1,7 @@
 /* "CSV" 副命令集群 */
 // 命令: cargo run csv --input ./assets/juventus.csv
 use super::utils::verify_file;
-use crate::{process::csv_convert::process_csv, CmdExector};
+use crate::{process::csv_convert::major_clap_csv, CmdExector};
 use clap::Parser;
 use core::fmt;
 use std::str::FromStr;
@@ -36,7 +36,7 @@ impl CmdExector for CsvOpts {
         };
 
         // 正式执行转换(serde)
-        process_csv(&self.input, output, self.format)
+        major_clap_csv(&self.input, output, self.format)
     }
 }
 

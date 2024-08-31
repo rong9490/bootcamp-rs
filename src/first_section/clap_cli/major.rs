@@ -1,12 +1,9 @@
+use super::csv_convert::csv_cli::{major_clap_csv, Opts, SubCommand};
 use clap::Parser;
-use super::csv_cli::{Opts, SubCommand, process_csv};
 
-// cargo run -- csv --input assets/juventus.csv --output output.json --delimiter ',' --header true
-// cargo run -- csv --input assets/juventus.csv
 pub fn major() -> anyhow::Result<()> {
-    println!("major开始: csv_cli");
     let opts: Opts = Opts::parse();
-    println!("{:?}", opts);
+    // println!("{:?}", opts);
 
     // 匹配副命令
     match opts.command {
@@ -16,7 +13,7 @@ pub fn major() -> anyhow::Result<()> {
             } else {
                 format!("output.{}", csv_opts.format).into() // 缺省值, format想要转字符串, 需要实现fmt::Display trait
             };
-            process_csv(&csv_opts.input, output, csv_opts.format)?
+            major_clap_csv(&csv_opts.input, output, csv_opts.format)?
         }
     }
 

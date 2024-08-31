@@ -17,13 +17,13 @@ pub fn usage_csv_cli() -> anyhow::Result<()> {
 
     match opts.cmd {
         SubCommand::Csv(opts) => {
-            let _ = process_csv(&opts.input, &opts.output);
+            let _ = major_clap_csv(&opts.input, &opts.output);
         }
     }
     Ok(())
 }
 
-fn process_csv(input: &str, _output: &str) -> anyhow::Result<()> {
+fn major_clap_csv(input: &str, _output: &str) -> anyhow::Result<()> {
     let mut reader = Reader::from_path(input)?;
 
     // 1. 迭代器 + 闭包
