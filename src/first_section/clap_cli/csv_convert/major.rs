@@ -7,21 +7,9 @@ use csv::{Reader, StringRecord};
 use serde_json::Value;
 use std::fs;
 
+// 处理csv副命令
 #[derive(Debug, Parser)]
-#[command(author, version, about, long_about = None)]
-pub struct Opts {
-    #[command(subcommand)] // 副命令
-    pub command: SubCommand,
-}
-
-#[derive(Debug, Parser)]
-pub enum SubCommand {
-    #[command(name = "csv", about = "CSV转其他格式")]
-    Csv(CsvOpts),
-}
-
-#[derive(Debug, Parser)]
-pub struct CsvOpts {
+pub struct CsvConvertOpts {
     #[arg(long, default_value = "assets/juventus.csv", value_parser = verify_input_file)]
     // 做一个转换 "assets/juventus.csv".into()
     pub input: String,
