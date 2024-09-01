@@ -2,7 +2,7 @@
 // pub mod process;
 // pub mod utils;
 // use enum_dispatch::enum_dispatch;
-// use cli::genpass::GenPassOpts;
+// use cli::genpass::GenPassSub;
 // use cli::entry::SubCommand;
 // use cli::csv::CsvOpts;
 // use cli::base64::{Base64SubCommand, Base64EncodeOpts, Base64DecodeOpts};

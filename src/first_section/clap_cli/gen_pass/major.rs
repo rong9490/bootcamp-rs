@@ -1,6 +1,24 @@
 use clap::Parser;
 use rand::{thread_rng, Rng};
 
+#[derive(Debug, Parser)]
+pub struct GenPassSub {
+    #[arg(long, default_value_t = 16)]
+    pub length: u8,
+
+    #[arg(long, default_value_t = true)]
+    pub uppercase: bool,
+
+    #[arg(long, default_value_t = true)]
+    pub lowercase: bool,
+
+    #[arg(long, default_value_t = true)]
+    pub number: bool,
+
+    #[arg(long, default_value_t = true)]
+    pub symbol: bool,
+}
+
 // 副命令: 随机密码
 pub fn major_clap_gen_pass(
     uppercase: bool,
@@ -40,22 +58,4 @@ pub fn major_clap_gen_pass(
     // TODO 验证密码强度 zxcvbn
 
     Ok(())
-}
-
-#[derive(Debug, Parser)]
-pub struct GenPassOpts {
-    #[arg(long, default_value_t = 16)]
-    pub length: u8,
-
-    #[arg(long, default_value_t = true)]
-    pub uppercase: bool,
-
-    #[arg(long, default_value_t = true)]
-    pub lowercase: bool,
-
-    #[arg(long, default_value_t = true)]
-    pub number: bool,
-
-    #[arg(long, default_value_t = true)]
-    pub symbol: bool,
 }

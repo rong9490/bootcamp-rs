@@ -9,7 +9,7 @@ use std::fs;
 
 // 处理csv副命令
 #[derive(Debug, Parser)]
-pub struct CsvConvertOpts {
+pub struct CsvConventSub {
     #[arg(long, default_value = "assets/juventus.csv", value_parser = verify_input_file)]
     // 做一个转换 "assets/juventus.csv".into()
     pub input: String,

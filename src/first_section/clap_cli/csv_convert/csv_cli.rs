@@ -41,7 +41,7 @@ pub struct CsvOpts {
 }
 
 // 处理csv副命令, 流程
-pub fn major_clap_csv(input: &str, output: String, format: OutputFormat) -> anyhow::Result<()> {
+pub fn major_clap_csv(input: String, output: String, format: OutputFormat) -> anyhow::Result<()> {
     let mut reader = Reader::from_path(input)?;
 
     // 1. 迭代器 + 闭包

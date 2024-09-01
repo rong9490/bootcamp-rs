@@ -6,7 +6,7 @@ use zxcvbn::{zxcvbn, Entropy};
 
 #[derive(Debug, Parser)]
 // (副命令)案例一: 密码生成器
-pub struct GenPassOpts {
+pub struct GenPassSub {
     #[arg(short, long, default_value_t = 30)]
     pub length: u8,
 
@@ -23,9 +23,9 @@ pub struct GenPassOpts {
     pub symbol: bool,
 }
 
-// 为GenPassOpts这个静态的结构体, 实现CmdExector这个Trait接口方法
+// 为GenPassSub这个静态的结构体, 实现CmdExector这个Trait接口方法
 // 这里不进行具体的执行代码, 交给 process_genpass
-impl CmdExector for GenPassOpts {
+impl CmdExector for GenPassSub {
     async fn execute(self) -> anyhow::Result<()> {
         let password: String = process_genpass(
             self.length,
@@ -42,7 +42,7 @@ impl CmdExector for GenPassOpts {
     }
 }
 
-impl GenPassOpts {
+impl GenPassSub {
     fn score(self, password: String) -> anyhow::Result<u8> {
         let estimate: Entropy = zxcvbn(&password, &[])?;
         let score: u8 = estimate.score();

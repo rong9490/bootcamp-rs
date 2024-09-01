@@ -1,5 +1,5 @@
 use super::csv::CsvOpts;
-use super::genpass::GenPassOpts;
+use super::genpass::GenPassSub;
 use clap::Parser;
 use enum_dispatch::enum_dispatch;
 use super::base64::Base64SubCommand;
@@ -20,7 +20,7 @@ pub enum SubCommand {
     Csv(CsvOpts), // "CSV读取"
 
     #[command(name = "genpass", about = "密码生成器")]
-    GenPass(GenPassOpts), // "密码生成" 具体的内容单独维护
+    GenPass(GenPassSub), // "密码生成" 具体的内容单独维护
 
     #[command(subcommand)]
     Base64(Base64SubCommand), // 注意: 这里多嵌套了一层, CmdExector 如何处理
