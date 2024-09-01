@@ -1,10 +1,6 @@
-use std::{fmt, str::FromStr};
-
-use clap::Parser;
-
+use super::utils::{parse_base64_format, process_encode, verify_input_file, Base64Format};
 use crate::first_section::clap_cli::base64_crate::utils::process_decode;
-
-use super::utils::{base64_format_parser, process_encode, verify_input_file, Base64Format};
+use clap::Parser;
 
 // 注意: 这里多了一层嵌套(三层命令 主/副/副)
 
@@ -24,25 +20,25 @@ pub struct Base64EncodeOpts {
     #[arg(long, value_parser = verify_input_file, default_value = "-")] // -代表stdin读入的内容
     pub input: String,
 
-    #[arg(long, value_parser = base64_format_parser, default_value = "standard")]
+    #[arg(long, value_parser = parse_base64_format, default_value = "standard")]
     pub format: Base64Format,
 }
 
 #[derive(Debug, Parser)]
 pub struct Base64DecodeOpts {
-    #[arg(long)]
+    #[arg(long, value_parser = verify_input_file, default_value = "-")] // -代表stdin读入的内容
     pub input: String,
 
-    #[arg(long, value_parser = base64_format_parser, default_value = "standard")]
+    #[arg(long, value_parser = parse_base64_format, default_value = "standard")]
     pub format: Base64Format,
 }
 
 pub fn major_clap_base64_encode(input: String, format: Base64Format) -> anyhow::Result<()> {
-    process_encode(input, format)?;
+    process_encode(&input, format)?;
     Ok(())
 }
 
 pub fn major_clap_base64_decode(input: String, format: Base64Format) -> anyhow::Result<()> {
-    process_decode(input, format)?;
+    process_decode(&input, format)?;
     Ok(())
 }

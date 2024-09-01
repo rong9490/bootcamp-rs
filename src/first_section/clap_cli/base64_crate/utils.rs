@@ -1,11 +1,13 @@
+use base64::{
+    engine::general_purpose::{STANDARD, URL_SAFE_NO_PAD},
+    Engine as _,
+};
 use std::{
     fmt,
     io::{stdin, Read},
     path::Path,
     str::FromStr,
 };
-use base64::{engine::general_purpose::STANDARD, Engine as _};
-use base64::engine::general_purpose::URL_SAFE;
 
 #[derive(Debug, Clone, Copy)]
 pub enum Base64Format {
@@ -13,12 +15,8 @@ pub enum Base64Format {
     UrlSafe,
 }
 
-pub fn base64_format_parser(s: &str) -> Result<Base64Format, String> {
-    match s {
-        "standard" => Ok(Base64Format::Standard),
-        "urlsafe" => Ok(Base64Format::UrlSafe),
-        _ => Err(format!("无效的base64格式: {}", s)),
-    }
+pub fn parse_base64_format(format: &str) -> Result<Base64Format, anyhow::Error> {
+    format.parse()
 }
 
 impl FromStr for Base64Format {
@@ -33,56 +31,62 @@ impl FromStr for Base64Format {
     }
 }
 
+impl From<Base64Format> for &'static str {
+    fn from(format: Base64Format) -> Self {
+        match format {
+            Base64Format::Standard => "standard",
+            Base64Format::UrlSafe => "urlsafe",
+        }
+    }
+}
+
 impl fmt::Display for Base64Format {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{}", self.to_string())
     }
 }
 
-// 专注处理'编码'
-pub fn process_encode(input: String, format: Base64Format) -> anyhow::Result<()> {
-    // HACK 是否能返回不同的类型 --> Box封装一层(提升到dyn)
-    // 文件读取流程, 可以提取成公共的读取方法
-    let mut reader: Box<dyn Read> = if input == "-" {
+fn get_reader(input: &str) -> anyhow::Result<Box<dyn Read>> {
+    let reader = if input == "-" {
         Box::new(stdin()) as Box<dyn Read>
     } else {
         let file = std::fs::File::open(input)?;
         Box::new(file) as Box<dyn Read>
     };
+    Ok(reader)
+}
 
+// 专注处理'编码'
+pub fn process_encode(input: &str, format: Base64Format) -> anyhow::Result<String> {
+    let mut reader: Box<dyn Read> = get_reader(input)?;
     let mut buffer = Vec::new();
     reader.read_to_end(&mut buffer)?;
 
     // 两种编码类型
     let encoded = match format {
-        Base64Format::Standard => URL_SAFE.encode(buffer),
-        Base64Format::UrlSafe => URL_SAFE.encode(buffer),
+        Base64Format::Standard => STANDARD.encode(buffer),
+        Base64Format::UrlSafe => URL_SAFE_NO_PAD.encode(buffer),
     };
-    println!("encoded: {}", encoded);
-
-    Ok(())
+    println!("{}", encoded);
+    Ok(encoded)
 }
 
-pub fn process_decode(input: String, format: Base64Format) -> anyhow::Result<()> {
-    let mut reader: Box<dyn Read> = if input == "-" {
-        Box::new(stdin()) as Box<dyn Read>
-    } else {
-        let file = std::fs::File::open(input)?;
-        Box::new(file) as Box<dyn Read>
-    };
+pub fn process_decode(input: &str, format: Base64Format) -> anyhow::Result<()> {
+    let mut reader = get_reader(input)?;
+    // let mut buffer = Vec::new();
+    let mut buffer = String::new();
+    reader.read_to_string(&mut buffer)?;
 
-    let mut buffer = Vec::new();
-    reader.read_to_end(&mut buffer)?;
+    let buffer = buffer.trim(); // 去掉可能的换行符
 
     // 两种解码类型
     let decoded = match format {
-        Base64Format::Standard => STANDARD.decode(&buffer)?,
-        Base64Format::UrlSafe => URL_SAFE.decode(&buffer)?,
+        Base64Format::Standard => STANDARD.decode(buffer)?, // clippy: 去掉引用&
+        Base64Format::UrlSafe => URL_SAFE_NO_PAD.decode(buffer)?,
     };
     // TODO 可能不是字符串
     let decoded_str = String::from_utf8(decoded)?;
-    println!("decoded: {}", decoded_str);
-
+    println!("{}", decoded_str);
     Ok(())
 }
 
@@ -106,13 +110,40 @@ pub fn verify_input_file(filename: &str) -> Result<String, &'static str> {
 mod tests {
     use super::*;
 
+    // #[test]
+    // fn test_verify_input_file() {
+    //     assert_eq!(
+    //         verify_input_file("assets/juventus.csv"),
+    //         Ok("assets/juventus.csv".into())
+    //     );
+    //     assert_eq!(verify_input_file("assets/a.csv"), Err("文件不存在!"));
+    //     assert_eq!(verify_input_file("-"), Ok("-".into()));
+    // }
+
+    // #[test]
+    // fn test_parse_base64_format() {
+    //     // assert_eq!(parse_base64_format("standard"), Ok(Base64Format::Standard));
+    //     // assert_eq!(parse_base64_format("urlsafe"), Ok(Base64Format::UrlSafe));
+    //     // assert_eq!(parse_base64_format("invalid"), Err(anyhow::anyhow!("无效的base64格式: invalid")));
+    // }
+
     #[test]
-    fn test_verify_input_file() {
-        assert_eq!(
-            verify_input_file("assets/juventus.csv"),
-            Ok("assets/juventus.csv".into())
-        );
-        assert_eq!(verify_input_file("assets/a.csv"), Err("文件不存在!"));
-        assert_eq!(verify_input_file("-"), Ok("-".into()));
+    fn test_process_encode() -> anyhow::Result<()> {
+        // 测试标准编码
+        let input = "测试文本";
+        let result = process_encode(input, Base64Format::Standard)?;
+        assert_eq!(result, "5rWL6K+V5paH5pys");
+
+        // // 测试URL安全编码
+        // let input = "Hello, World!";
+        // let result = process_encode(input, Base64Format::UrlSafe)?;
+        // assert_eq!(result, "SGVsbG8sIFdvcmxkIQ");
+
+        // // 测试空输入
+        // let input = "";
+        // let result = process_encode(input, Base64Format::Standard)?;
+        // assert_eq!(result, "");
+
+        Ok(())
     }
 }

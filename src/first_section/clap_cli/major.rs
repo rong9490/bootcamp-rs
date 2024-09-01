@@ -33,9 +33,7 @@ enum SubCommand {
 
 pub fn major() -> anyhow::Result<()> {
     let opts: Opts = Opts::parse();
-    // println!("{:?}", opts);
-
-    // 匹配副命令
+    // 副命令分发
     match opts.command {
         SubCommand::Csv(csv_opts) => {
             let CsvConventSub {
