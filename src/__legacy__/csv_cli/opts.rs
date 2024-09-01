@@ -1,4 +1,4 @@
-use super::utils::verify_input_file;
+use super::utils::verify_file_exists;
 use clap::Parser;
 
 #[derive(Debug, Parser)]
@@ -16,7 +16,7 @@ pub enum SubCommand {
 
 #[derive(Debug, Parser)]
 pub struct CsvOpts {
-    #[arg(short, long, value_parser = verify_input_file, default_value = "assets/juventus.csv")]
+    #[arg(short, long, value_parser = verify_file_exists, default_value = "assets/juventus.csv")]
     pub input: String,
 
     #[arg(short, long, default_value = "output.json")] // "output.json".into()

@@ -31,7 +31,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_verify_input_file() {
+    fn test_verify_file_exists() {
         assert_eq!(verify_file("-"), Ok("-".into())); // "-"时直接成功返回
         assert_eq!(verify_file("*"), Err("File does not exist: *".into())); // 文件不存在
         assert_eq!(

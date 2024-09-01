@@ -7,7 +7,7 @@ use super::{
         csv_cli::{major_clap_csv, CsvOpts},
         major::CsvConventSub,
     },
-    gen_pass::major::{major_clap_gen_pass, GenPassSub},
+    gen_pass::major::{major_clap_gen_pass, GenPassSub}, text_encrypt::major::{major_clap_text_sign, major_clap_text_verify, TextEncryptSub, TextSignOpts, TextVerifyOpts},
 };
 use clap::Parser;
 
@@ -29,6 +29,9 @@ enum SubCommand {
 
     #[command(subcommand)]
     Base64(Base64Sub),
+
+    #[command(subcommand)]
+    Text(TextEncryptSub),
 }
 
 pub fn major() -> anyhow::Result<()> {
@@ -71,6 +74,17 @@ pub fn major() -> anyhow::Result<()> {
             Base64Sub::Decode(decode_opts) => {
                 let Base64DecodeOpts { input, format } = decode_opts;
                 major_clap_base64_decode(input, format)?
+            }
+        },
+
+        SubCommand::Text(text_sub) => match text_sub {
+            TextEncryptSub::Sign(sign_opts) => {
+                let TextSignOpts { input, key, format } = sign_opts;
+                major_clap_text_sign(input, key, format)?
+            }
+            TextEncryptSub::Verify(verify_opts) => {
+                let TextVerifyOpts { input, key, sig, format } = verify_opts;
+                major_clap_text_verify(input, key, sig, format)?
             }
         },
     }

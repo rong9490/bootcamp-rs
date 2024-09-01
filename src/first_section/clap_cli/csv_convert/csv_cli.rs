@@ -1,7 +1,7 @@
 // 处理命令行相关内容
 
 use super::output_format::{parse_format, OutputFormat};
-use super::utils::verify_input_file;
+use super::utils::verify_file_exists;
 use clap::Parser;
 use csv::{Reader, StringRecord};
 use serde_json::Value;
@@ -22,7 +22,7 @@ pub enum SubCommand {
 
 #[derive(Debug, Parser)]
 pub struct CsvOpts {
-    #[arg(long, default_value = "assets/juventus.csv", value_parser = verify_input_file)]
+    #[arg(long, default_value = "assets/juventus.csv", value_parser = verify_file_exists)]
     // 做一个转换 "assets/juventus.csv".into()
     pub input: String,
 

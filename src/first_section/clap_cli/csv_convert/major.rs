@@ -1,7 +1,7 @@
 // 处理命令行相关内容
 
 use super::output_format::{parse_format, OutputFormat};
-use super::utils::verify_input_file;
+use super::utils::verify_file_exists;
 use clap::Parser;
 use csv::{Reader, StringRecord};
 use serde_json::Value;
@@ -10,7 +10,7 @@ use std::fs;
 // 处理csv副命令
 #[derive(Debug, Parser)]
 pub struct CsvConventSub {
-    #[arg(long, default_value = "assets/juventus.csv", value_parser = verify_input_file)]
+    #[arg(long, default_value = "assets/juventus.csv", value_parser = verify_file_exists)]
     // 做一个转换 "assets/juventus.csv".into()
     pub input: String,
 

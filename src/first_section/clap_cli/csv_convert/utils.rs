@@ -1,7 +1,7 @@
 use std::path::Path;
 
 // 输入文件校验
-pub fn verify_input_file(file_name: &str) -> Result<String, &'static str> {
+pub fn verify_file_exists(file_name: &str) -> Result<String, &'static str> {
     let file_exists = Path::new(file_name).exists();
     if file_exists {
         if !file_name.ends_with(".csv") {
@@ -28,12 +28,12 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_verify_input_file() {
+    fn test_verify_file_exists() {
         assert_eq!(
-            verify_input_file("assets/juventus.csv"),
+            verify_file_exists("assets/juventus.csv"),
             Ok("assets/juventus.csv".into())
         );
-        assert_eq!(verify_input_file("assets/a.csv"), Err("输入文件不存在"));
+        assert_eq!(verify_file_exists("assets/a.csv"), Err("输入文件不存在"));
     }
 
     #[test]

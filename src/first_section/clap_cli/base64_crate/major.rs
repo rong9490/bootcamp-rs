@@ -1,4 +1,4 @@
-use super::utils::{parse_base64_format, process_encode, verify_input_file, Base64Format};
+use super::utils::{parse_base64_format, process_encode, verify_file_exists, Base64Format};
 use crate::first_section::clap_cli::base64_crate::utils::process_decode;
 use clap::Parser;
 
@@ -17,7 +17,7 @@ pub enum Base64Sub {
 
 #[derive(Debug, Parser)]
 pub struct Base64EncodeOpts {
-    #[arg(long, value_parser = verify_input_file, default_value = "-")] // -代表stdin读入的内容
+    #[arg(long, value_parser = verify_file_exists, default_value = "-")] // -代表stdin读入的内容
     pub input: String,
 
     #[arg(long, value_parser = parse_base64_format, default_value = "standard")]
@@ -26,7 +26,7 @@ pub struct Base64EncodeOpts {
 
 #[derive(Debug, Parser)]
 pub struct Base64DecodeOpts {
-    #[arg(long, value_parser = verify_input_file, default_value = "-")] // -代表stdin读入的内容
+    #[arg(long, value_parser = verify_file_exists, default_value = "-")] // -代表stdin读入的内容
     pub input: String,
 
     #[arg(long, value_parser = parse_base64_format, default_value = "standard")]
