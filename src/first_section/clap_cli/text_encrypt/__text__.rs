@@ -4,6 +4,8 @@ use ed25519_dalek::{Signature, Signer, SigningKey, Verifier, VerifyingKey};
 use rand::rngs::OsRng;
 use std::{collections::HashMap, io::Read};
 
+// Trait接口声明: 需要保证其通用性, 不断重构优化调整
+// dyn 动态分发, 运行时多态; 体积更小, 速度稍慢 (静态分发, 动态分发)
 pub trait TextSigner {
     // signer could sign any input data
     fn sign(&self, reader: &mut dyn Read) -> Result<Vec<u8>>;
@@ -18,6 +20,7 @@ pub struct Blake3 {
     key: [u8; 32],
 }
 
+// 两个方法的key不同
 pub struct Ed25519Signer {
     key: SigningKey,
 }
@@ -26,6 +29,7 @@ pub struct Ed25519Verifier {
     key: VerifyingKey,
 }
 
+// 实现结构体Blake3 的Trait TextSigner
 impl TextSigner for Blake3 {
     fn sign(&self, reader: &mut dyn Read) -> Result<Vec<u8>> {
         let mut buf = Vec::new();

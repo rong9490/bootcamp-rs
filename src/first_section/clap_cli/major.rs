@@ -7,8 +7,13 @@ use super::{
         csv_cli::{major_clap_csv, CsvOpts},
         major::CsvConventSub,
     },
-    gen_pass::major::{major_clap_gen_pass, GenPassSub}, text_encrypt::major::{major_clap_text_sign, major_clap_text_verify, TextEncryptSub, TextSignOpts, TextVerifyOpts},
+    gen_pass::major::{major_clap_gen_pass, GenPassSub},
+    http_serve::major::{major_clap_http_serve, HttpServeOpts, HttpSubCommand},
+    text_encrypt::major::{
+        major_clap_text_sign, major_clap_text_verify, TextEncryptSub, TextSignOpts, TextVerifyOpts,
+    },
 };
+use anyhow::Ok;
 use clap::Parser;
 
 // Cli 主命令
@@ -32,9 +37,13 @@ enum SubCommand {
 
     #[command(subcommand)]
     Text(TextEncryptSub),
+
+    #[command(subcommand)]
+    Http(HttpSubCommand),
 }
 
-pub fn major() -> anyhow::Result<()> {
+#[tokio::main]
+pub async fn major() -> anyhow::Result<()> {
     let opts: Opts = Opts::parse();
     // 副命令分发
     match opts.command {
@@ -83,8 +92,25 @@ pub fn major() -> anyhow::Result<()> {
                 major_clap_text_sign(input, key, format)?
             }
             TextEncryptSub::Verify(verify_opts) => {
-                let TextVerifyOpts { input, key, sig, format } = verify_opts;
+                let TextVerifyOpts {
+                    input,
+                    key,
+                    sig,
+                    format,
+                } = verify_opts;
                 major_clap_text_verify(input, key, sig, format)?
+            }
+        },
+
+        SubCommand::Http(http_sub) => match http_sub {
+            HttpSubCommand::Serve(serve_opts) => {
+                let HttpServeOpts { dir, port } = serve_opts;
+                major_clap_http_serve(dir, port).await; // await 传播
+                // Ok(())?
+                // major_clap_http_serve(dir, port)?
+
+                // let dir_path = PathBuf::from(dir); // 将 String 转换为 PathBuf
+                // major_clap_http_serve(dir_path, port).await;
             }
         },
     }
