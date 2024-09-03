@@ -7,6 +7,7 @@ use axum::{
 };
 use clap::Parser;
 use std::{net::SocketAddr, path::PathBuf, sync::Arc};
+use tower_http::services::ServeDir;
 use tracing::{info, warn};
 
 #[derive(Debug, Parser)]
@@ -43,8 +44,12 @@ struct HttpServeState {
 pub async fn major_clap_http_serve(path: PathBuf, port: u16) -> Result<()> {
     let addr = SocketAddr::from(([0, 0, 0, 0], port));
     info!("Serving {:?} on {}", path, addr);
-    let state = HttpServeState { path };
+
+    let state = HttpServeState { path: path.clone() };
+    // axum router
     let router = Router::new()
+        // tower_http 自带的文件服务
+        .nest_service("/tower", ServeDir::new(path))
         .route("/*path", get(file_handler))
         .route("/", get(index_handler))
         .with_state(Arc::new(state)); // 复用原语, Arc::new() 创建并保护
@@ -54,18 +59,29 @@ pub async fn major_clap_http_serve(path: PathBuf, port: u16) -> Result<()> {
     Ok(())
 }
 
+/*
+    tower-http::services
+    ServeDir
+    ServeFile
+*/
+
 async fn file_handler(
     State(state): State<Arc<HttpServeState>>,
     Path(path): Path<String>,
 ) -> (StatusCode, String) {
     let p = std::path::Path::new(&state.path).join(path);
     info!("Reading file {:?}", p);
+
     if !p.exists() {
         (
             StatusCode::NOT_FOUND,
             format!("File {} note found", p.display()),
         )
     } else {
+        // TODO: test p is a directory
+        // if it is a directory, list all files/subdirectories
+        // as <li><a href="/path/to/file">file name</a></li>
+        // <html><body><ul>...</ul></body></html>
         match tokio::fs::read_to_string(p).await {
             Ok(content) => {
                 info!("Read {} bytes", content.len());
