@@ -1,5 +1,4 @@
-use super::utils::{parse_base64_format, process_encode, verify_file_exists, Base64Format};
-use crate::first_section::clap_cli::base64_crate::utils::process_decode;
+use super::utils::{parse_base64_format, process_decode, process_encode, verify_file_exists, Base64Format};
 use clap::Parser;
 
 // 注意: 这里多了一层嵌套(三层命令 主/副/副)
