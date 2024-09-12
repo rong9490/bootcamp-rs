@@ -12,17 +12,17 @@ macro_rules! my_try {
     };
 }
 
-// my_ready! 宏
-// 用于模拟 Poll::Ready 和 Poll::Pending
-#[macro_export]
-macro_rules! my_ready {
-    ($e:expr) => {
-        match $e {
-            std::task::Poll::Ready(v) => v,
-            std::task::Poll::Pending => return std::task::Poll::Pending,
-        }
-    };
-}
+// // my_ready! 宏
+// // 用于模拟 Poll::Ready 和 Poll::Pending
+// #[macro_export]
+// macro_rules! my_ready {
+//     ($e:expr) => {
+//         match $e {
+//             std::task::Poll::Ready(v) => v,
+//             std::task::Poll::Pending => return std::task::Poll::Pending,
+//         }
+//     };
+// }
 
 // // ready 宏
 // // 用于模拟 Poll::Ready
