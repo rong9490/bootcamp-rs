@@ -1,0 +1,323 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in library 'tiger'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--lib",
+                    "--package=tiger"
+                ],
+                "filter": {
+                    "name": "tiger",
+                    "kind": "lib"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'tiger'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=tiger",
+                    "--package=tiger"
+                ],
+                "filter": {
+                    "name": "tiger",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'tiger'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=tiger",
+                    "--package=tiger"
+                ],
+                "filter": {
+                    "name": "tiger",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug example 'actions'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--example=actions",
+                    "--package=tiger"
+                ],
+                "filter": {
+                    "name": "actions",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in example 'actions'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--example=actions",
+                    "--package=tiger"
+                ],
+                "filter": {
+                    "name": "actions",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug example 'eco_err'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--example=eco_err",
+                    "--package=tiger"
+                ],
+                "filter": {
+                    "name": "eco_err",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in example 'eco_err'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--example=eco_err",
+                    "--package=tiger"
+                ],
+                "filter": {
+                    "name": "eco_err",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug example 'meta_myprint'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--example=meta_myprint",
+                    "--package=tiger"
+                ],
+                "filter": {
+                    "name": "meta_myprint",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in example 'meta_myprint'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--example=meta_myprint",
+                    "--package=tiger"
+                ],
+                "filter": {
+                    "name": "meta_myprint",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug example 'meta_myready'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--example=meta_myready",
+                    "--package=tiger"
+                ],
+                "filter": {
+                    "name": "meta_myready",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in example 'meta_myready'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--example=meta_myready",
+                    "--package=tiger"
+                ],
+                "filter": {
+                    "name": "meta_myready",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug example 'meta_mytry'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--example=meta_mytry",
+                    "--package=tiger"
+                ],
+                "filter": {
+                    "name": "meta_mytry",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in example 'meta_mytry'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--example=meta_mytry",
+                    "--package=tiger"
+                ],
+                "filter": {
+                    "name": "meta_mytry",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug example 'meta_myvec'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--example=meta_myvec",
+                    "--package=tiger"
+                ],
+                "filter": {
+                    "name": "meta_myvec",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in example 'meta_myvec'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--example=meta_myvec",
+                    "--package=tiger"
+                ],
+                "filter": {
+                    "name": "meta_myvec",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug example 'thread1'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--example=thread1",
+                    "--package=tiger"
+                ],
+                "filter": {
+                    "name": "thread1",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in example 'thread1'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--example=thread1",
+                    "--package=tiger"
+                ],
+                "filter": {
+                    "name": "thread1",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}

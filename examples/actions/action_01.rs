@@ -1,11 +1,11 @@
 #![allow(clippy::all, clippy::pedantic)]
 // HACK rust-in-action 第一章
 
-fn main() {
-    greet_world();
-}
+// fn main() {
+//     greet_world();
+// }
 
-fn greet_world<'a>() -> [&'a str; 2] {
+pub fn greet_world<'a>() -> [&'a str; 2] {
     let southern_germany: &'a str = "Grüß Gott!";
     let japan: &'a str = "ハロー・ワールド";
     let regions: [&'a str; 2] = [southern_germany, japan];
