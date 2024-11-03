@@ -2,11 +2,12 @@
 
 // https://github.com/tyr-rust-bootcamp
 
-// use tiger::section01::clap_cli::major::major as major_clap;
-use tiger::programming::major::major as major_pg;
+use tiger::section01::clap_cli::major::major as major_clap;
+// use tiger::programming::major::major as major_pg;
 
 fn main() -> anyhow::Result<()> {
-    // major_clap()?;
-    major_pg();
+    tracing_subscriber::fmt::init(); // NOTE 初始化日志
+    major_clap()?;
+    // major_pg();
     Ok(())
 }

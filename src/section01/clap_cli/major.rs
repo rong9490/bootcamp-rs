@@ -8,7 +8,10 @@ use super::{
         major::CsvConventSub,
     },
     gen_pass::major::{major_clap_gen_pass, GenPassSub},
-    http_serve::major::{major_clap_http_serve, HttpServeOpts, HttpSubCommand},
+    http_serve::{
+        major::HttpSubCommand,
+        serve::{major_clap_http_serve, HttpServeOpts},
+    },
     text_encrypt::major::{
         major_clap_text_sign, major_clap_text_verify, TextEncryptSub, TextSignOpts, TextVerifyOpts,
     },
@@ -42,6 +45,7 @@ enum SubCommand {
     Http(HttpSubCommand),
 }
 
+// 异步主命令
 #[tokio::main]
 pub async fn major() -> anyhow::Result<()> {
     let opts: Opts = Opts::parse();
@@ -105,9 +109,9 @@ pub async fn major() -> anyhow::Result<()> {
         SubCommand::Http(http_sub) => match http_sub {
             HttpSubCommand::Serve(serve_opts) => {
                 let HttpServeOpts { dir, port } = serve_opts;
-                major_clap_http_serve(dir, port).await; // await 传播
-                // Ok(())?
-                // major_clap_http_serve(dir, port)?
+                let _ = major_clap_http_serve(dir, port).await; // await 传播
+                                                                // Ok(())?
+                                                                // major_clap_http_serve(dir, port)?
 
                 // let dir_path = PathBuf::from(dir); // 将 String 转换为 PathBuf
                 // major_clap_http_serve(dir_path, port).await;

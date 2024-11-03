@@ -12,6 +12,7 @@ anyhow = "1.0.81"
 axum = { version = "0.7.4", features = ["http2", "query", "tracing"] }
 base64 = "0.22.0"
 blake3 = "1.5.1"
+chrono = "0.4.38"
 clap = { version = "4.5.3", features = ["derive"] }
 csv = "1.3.0"
 ed25519-dalek = { version = "2.1.1", features = ["rand_core"] }
