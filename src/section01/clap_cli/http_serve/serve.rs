@@ -44,7 +44,7 @@ pub async fn major_clap_http_serve(path: PathBuf, port: u16) -> Result<()> {
     let router: Router = Router::new()
         // index handler
         .route("/", get(index_handler))
-        // tower_http 自带的文件服务
+        // tower_http 自带的文件服务 (路径自动)
         .nest_service("/tower", ServeDir::new(path.clone()))
         .route("/*path", get(file_handler))
         .with_state(Arc::new(state)); // 复用原语, Arc::new() 创建并保护
