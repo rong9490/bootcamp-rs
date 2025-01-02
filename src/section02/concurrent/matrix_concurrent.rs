@@ -10,6 +10,11 @@ pub struct Matrix<T> {
     cols: usize,
 }
 
+pub struct Vector<T> {
+    date: Vec<T>,
+    len: usize,
+}
+
 pub fn multiply<T>(a: &Matrix<T>, b: &Matrix<T>) -> Result<Matrix<T>>
 where
     T: fmt::Debug

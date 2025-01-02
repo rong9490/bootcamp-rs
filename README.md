@@ -82,4 +82,4 @@ cargo nextest 是一个 Rust 增强测试工具。
 cargo install cargo-nextest --locked
 ```
 
-- 20241116 第x课
+- 20241123 矩阵乘法(二)
