@@ -7,9 +7,9 @@ pub fn verify_file_exists(file_name: &str) -> Result<String, &'static str> {
         if !file_name.ends_with(".csv") {
             return Err("输入文件必须是CSV文件");
         }
-        return Ok(file_name.into());
+        Ok(file_name.into())
     } else {
-        return Err("输入文件不存在");
+        Err("输入文件不存在")
     }
 }
 
@@ -17,9 +17,9 @@ pub fn verify_file_exists(file_name: &str) -> Result<String, &'static str> {
 pub fn verify_dirpath(path: &str) -> Result<String, &'static str> {
     let p: &Path = Path::new(path);
     if p.exists() && p.is_dir() {
-        return Ok(path.into());
+        Ok(path.into())
     } else {
-        return Err("目录不存在");
+        Err("目录不存在")
     }
 }
 

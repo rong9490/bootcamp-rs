@@ -42,7 +42,7 @@ impl From<Base64Format> for &'static str {
 
 impl fmt::Display for Base64Format {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{}", self.to_string())
+        write!(f, "{}", self)
     }
 }
 

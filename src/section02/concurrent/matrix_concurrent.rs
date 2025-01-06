@@ -37,8 +37,8 @@ where
         for j in 0..b.cols {
             for k in 0..a.cols {
                 // 所有权问题(需要Copy)
-                let a_value = a.data[i * a.cols + k].clone();
-                let b_value = b.data[k * b.cols + j].clone();
+                let a_value = a.data[i * a.cols + k];
+                let b_value = b.data[k * b.cols + j];
                 data[i * b.cols + j] += a_value * b_value;
             }
         }
@@ -99,8 +99,8 @@ mod tests {
 
     #[test]
     fn test_matrix() -> Result<()> {
-        let a = Matrix::new(&[1, 2, 3, 4, 5, 6], 2, 3);
-        let b = Matrix::new(&[1, 2, 3, 4, 5, 6], 3, 2);
+        let a = Matrix::new([1, 2, 3, 4, 5, 6], 2, 3);
+        let b = Matrix::new([1, 2, 3, 4, 5, 6], 3, 2);
         let c = multiply(&a, &b)?;
         println!("{}", c);
         assert_eq!(c.rows, 2);

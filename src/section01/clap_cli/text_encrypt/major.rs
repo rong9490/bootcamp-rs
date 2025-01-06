@@ -76,7 +76,7 @@ impl From<TextSignFormat> for &'static str {
 
 impl fmt::Display for TextSignFormat {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{}", self.to_string())
+        write!(f, "{}", self)
     }
 }
 

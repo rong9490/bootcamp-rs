@@ -4,7 +4,7 @@ use super::{
         Base64Sub,
     },
     csv_convert::{
-        csv_cli::{major_clap_csv, CsvOpts},
+        csv_cli::major_clap_csv,
         major::CsvConventSub,
     },
     gen_pass::major::{major_clap_gen_pass, GenPassSub},
@@ -62,7 +62,7 @@ pub async fn major() -> anyhow::Result<()> {
             let output: String = if let Some(output) = output {
                 output.clone()
             } else {
-                format!("output.{}", csv_opts.format).into() // 缺省值, format想要转字符串, 需要实现fmt::Display trait
+                format!("output.{}", csv_opts.format) // 缺省值, format想要转字符串, 需要实现fmt::Display trait
             };
             major_clap_csv(input, output, format)?
         }

@@ -46,5 +46,3 @@ impl fmt::Display for OutputFormat {
         write!(f, "{}", Into::<&str>::into(*self)) // 声明周期, 隐式转换
     }
 }
-
-// 好难呀~~
