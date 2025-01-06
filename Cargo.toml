@@ -1,17 +1,15 @@
 [package]
-name = "tiger"
-version = "0.1.0"
+name = "toolbox"
+version = "1.0.0"
 edition = "2021"
-license = "MIT"
-author = ["Tiger"]
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+author = ["@hejj"]
 
 [dependencies]
-anyhow = "1.0.81"
+anyhow = "1.0.95"
 axum = { version = "0.7.4", features = ["http2", "query", "tracing"] }
 base64 = "0.22.0"
 blake3 = "1.5.1"
+cargo-edit = "0.13.0" # 用于管理依赖
 chrono = "0.4.38"
 clap = { version = "4.5.3", features = ["derive"] }
 csv = "1.3.0"

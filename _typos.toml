@@ -1,4 +1,5 @@
-[default.extend-words]
+# 暂不启用 拼写检查!
+# [default.extend-words]
 
-[files]
-extend-exclude = ["CHANGELOG.md", "notebooks/*"]
+# [files]
+# extend-exclude = ["CHANGELOG.md", "notebooks/*"]
