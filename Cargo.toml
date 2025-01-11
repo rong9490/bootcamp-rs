@@ -13,6 +13,7 @@ cargo-edit = "0.13.0" # 用于管理依赖
 chrono = "0.4.38"
 clap = { version = "4.5.3", features = ["derive"] }
 csv = "1.3.0"
+dotenv = "0.15.0"
 ed25519-dalek = { version = "2.1.1", features = ["rand_core"] }
 rand = "0.8.5"
 serde = { version = "1.0.197", features = ["derive"] }

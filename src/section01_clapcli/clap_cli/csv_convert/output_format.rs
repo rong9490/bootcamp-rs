@@ -2,7 +2,7 @@
 
 use std::{fmt, str::FromStr};
 
-// pub trait FromStr: Sized {}
+// 签名: pub trait FromStr: Sized {}
 
 // 输出文件格式枚举
 #[derive(Debug, Clone, Copy,)]
@@ -11,7 +11,86 @@ pub enum OutputFormat {
     Yaml,
 }
 
+// 类型收窄: 将字符串转换为枚举项 ? 这个方法可以跟枚举本身关联吗 ?
+pub fn parse_format(format_str: &str) -> Result<OutputFormat, anyhow::Error> {
+    match format_str {
+        "json" => Ok(OutputFormat::Json),
+        "yaml" => Ok(OutputFormat::Yaml),
+        _ => Err(anyhow::anyhow!("Invalid format type: {}", format_str)),
+    }
+}
+
 /* === FromStr Trait === */
 
+// 从 "枚举项" --> 字符串
+impl From<OutputFormat> for &'static str {
+    fn from(format_str: OutputFormat) -> Self {
+        match format_str {
+            OutputFormat::Json => "json",
+            OutputFormat::Yaml => "yaml",
+        }
+    }
+}
 
 /* === Into Trait === */
+
+// 从 "字符串" --> 枚举项
+impl FromStr for OutputFormat {
+    type Err = anyhow::Error; // 上下文错误类型
+
+    fn from_str(str: &str) -> Result<Self, Self::Err> {
+        match str.to_lowercase().as_str() {
+            "json" => Ok(OutputFormat::Json),
+            "yaml" => Ok(OutputFormat::Yaml),
+            _ => Err(anyhow::anyhow!("Invalid format type: {}", str)),
+        }
+    }
+}
+
+/* === Display Trait === */
+
+impl fmt::Display for OutputFormat {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        // 两行代码有什么差别 ??
+        // write!(f, "{}", self.into())
+        write!(f, "{}", Into::<&str>::into(*self)) // 声明周期, 隐式转换
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_parse_format() {
+        assert!(matches!(parse_format("json").unwrap(), OutputFormat::Json));
+        assert!(matches!(parse_format("yaml").unwrap(), OutputFormat::Yaml));
+        assert!(parse_format("invalid").is_err());
+    }
+
+    #[test]
+    fn test_from_str() {
+        // 小写
+        assert!(matches!("json".parse::<OutputFormat>().unwrap(), OutputFormat::Json));
+        assert!(matches!("yaml".parse::<OutputFormat>().unwrap(), OutputFormat::Yaml));
+        // 大写
+        assert!(matches!("JSON".parse::<OutputFormat>().unwrap(), OutputFormat::Json));
+        assert!(matches!("YAML".parse::<OutputFormat>().unwrap(), OutputFormat::Yaml));
+    }
+
+    #[test]
+    fn test_display() {
+        // to_string 调用 fmt::Display::fmt
+        assert_eq!(OutputFormat::Json.to_string(), "json");
+        assert_eq!(OutputFormat::Yaml.to_string(), "yaml");
+    }
+
+    #[test]
+    fn test_into_str() {
+        // 调用 Into::<&str>::into 隐式转换
+        let json_str: &str = Into::<&str>::into(OutputFormat::Json);
+        let yaml_str: &str = Into::<&str>::into(OutputFormat::Yaml);
+        assert_eq!(json_str, "json");
+        assert_eq!(yaml_str, "yaml");
+    }
+}
