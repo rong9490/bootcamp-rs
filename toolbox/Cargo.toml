@@ -1,0 +1,10 @@
+[package]
+name = "toolbox"
+version = { workspace = true }
+edition = { workspace = true }
+authors = { workspace = true }
+
+[dependencies]
+claps = { path = "../crates/claps" }
+serde = { workspace = true }
+dotenv = { workspace = true }

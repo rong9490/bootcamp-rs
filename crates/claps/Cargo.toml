@@ -1,0 +1,11 @@
+[package]
+name = "claps"
+version = { workspace = true }
+edition = { workspace = true }
+authors = { workspace = true }
+
+[dependencies]
+anyhow = { workspace = true }
+serde = { workspace = true }
+dotenv = { workspace = true }
+clap = { version = "4.5.26", features = ["derive"] }
