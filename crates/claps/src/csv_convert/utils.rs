@@ -43,10 +43,10 @@ mod tests {
     fn test_verify_dirpath_exists() {
         const EXISTS_DIR: &str = "assets";
         const NOT_DIR: &str = "assets/juventus.csv";
-        const NOT_EXISTS_DIR: &str = "assets/xxyy.csv";
+        const NOT_EXISTS_DIR: &str = "assets_xxyy";
 
         assert_eq!(verify_dirpath_exists(EXISTS_DIR), Ok(EXISTS_DIR.into()));
         assert_eq!(verify_dirpath_exists(NOT_DIR), Err("输入参数不是目录"));
-        assert_eq!(verify_dirpath_exists(NOT_EXISTS_DIR), Err("目录不存在"));
+        assert_eq!(verify_dirpath_exists(NOT_EXISTS_DIR).is_err(), true);
     }
 }

@@ -2,7 +2,7 @@ use clap::Parser;
 use rand::{thread_rng, Rng};
 
 #[derive(Debug, Parser)]
-pub struct GenPassSub {
+pub struct GenPassCommand {
     #[arg(long, default_value_t = 16)]
     pub length: u8,
 
@@ -19,8 +19,27 @@ pub struct GenPassSub {
     pub symbol: bool,
 }
 
+// TODO ?? 实现CmdExector
+// impl CmdExector for GenPassCommand {
+//     async fn execute(self) -> anyhow::Result<()> {
+//         let ret = crate::process_genpass(
+//             self.length,
+//             self.uppercase,
+//             self.lowercase,
+//             self.number,
+//             self.symbol,
+//         )?;
+//         println!("{}", ret);
+
+//         // output password strength in stderr
+//         let estimate = zxcvbn(&ret, &[])?;
+//         eprintln!("Password strength: {}", estimate.score());
+//         Ok(())
+//     }
+// }
+
 // 副命令: 随机密码
-pub fn major_clap_gen_pass(
+pub fn deal_gen_pass(
     uppercase: bool,
     lowercase: bool,
     number: bool,
@@ -28,7 +47,7 @@ pub fn major_clap_gen_pass(
     length: u8,
 ) -> anyhow::Result<()> {
     let mut rng = thread_rng();
-    let mut password = String::new();
+    let mut password: String = String::new();
     let mut chars: Vec<char> = Vec::new();
 
     if uppercase {
@@ -56,6 +75,5 @@ pub fn major_clap_gen_pass(
     println!("pass: {}", password);
 
     // TODO 验证密码强度 zxcvbn
-
     Ok(())
 }

@@ -46,6 +46,8 @@ pub fn csv_convert(format: OutputFormat, input: String, output: String) -> anyho
         vec_player.push(player);
     }
 
+    // TODO 有个bug需要优化, output为 .json时与 yaml格式矛盾
+
     // 分格式处理
     let content: String = match format {
         OutputFormat::Json => serde_json::to_string_pretty(&vec_player)?,
