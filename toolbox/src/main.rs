@@ -1,5 +1,8 @@
-use claps::add;
+use anyhow::{Result, Ok};
 
-fn main() {
-    println!("Hello, world! {}", add(2, 3));
+use claps::major::major as claps_major;
+
+fn main() -> Result<()> {
+    claps_major()?;
+    Ok(())
 }

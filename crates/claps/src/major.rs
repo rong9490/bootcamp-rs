@@ -1,6 +1,6 @@
 use anyhow::{Ok, Result};
 
-use super::csv_convert::{cli_command::{CsvCommand, csv_convert}, major::major as major_csv_convert};
+use super::csv_convert::cli_command::{csv_convert, CsvCommand};
 
 use clap::{command, Parser};
 
@@ -21,17 +21,28 @@ pub enum SubCommand {
     Csv(CsvCommand),
 }
 
-// cargo run -- csv -i assets/juventus.csv -o assets/juventus.json
 pub fn major() -> Result<()> {
-    println!("子模块 clap_cli");
+    println!("终端应用");
 
     // 命令行实例解析
     let cli: CliMajor = CliMajor::parse();
-
     // 根据副命令分发具体的操作
     match cli.command {
         SubCommand::Csv(csv_cmd) => {
-            csv_convert(csv_cmd)?;
+          println!("{:?}", csv_cmd);
+            let CsvCommand {
+                format,
+                input,
+                output,
+                delimiter : _delimiter,
+                skip_header: _skip_header,
+            } = csv_cmd;
+            let output: String = if let Some(output) = output {
+                output.clone()
+            } else {
+                format!("output.{}", csv_cmd.format) // 缺省值, format想要转字符串, 需要实现fmt::Display trait
+            };
+            csv_convert(format, input, output)?
         }
     }
 
