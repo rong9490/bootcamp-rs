@@ -3,7 +3,6 @@
 use std::{fmt, str::FromStr};
 
 // 签名: pub trait FromStr: Sized {}
-
 // 输出文件格式枚举
 #[derive(Debug, Clone, Copy,)]
 pub enum OutputFormat {
@@ -11,9 +10,10 @@ pub enum OutputFormat {
     Yaml,
 }
 
-// 类型收窄: 将字符串转换为枚举项 ? 这个方法可以跟枚举本身关联吗 ?
+// 类型收窄: 将字符串转换为枚举项
 pub fn parse_format(format_str: &str) -> Result<OutputFormat, anyhow::Error> {
-    match format_str {
+    // (&str).trim() -> &str
+    match format_str.trim() {
         "json" => Ok(OutputFormat::Json),
         "yaml" => Ok(OutputFormat::Yaml),
         _ => Err(anyhow::anyhow!("Invalid format type: {}", format_str)),

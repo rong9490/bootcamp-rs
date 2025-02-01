@@ -1,8 +1,9 @@
 use anyhow::{Ok, Result};
-
-use super::csv_convert::cli_command::{csv_convert, CsvCommand};
-use super::gen_pass::gen_pass_command::{deal_gen_pass, GenPassCommand};
 use clap::{command, Parser};
+
+use super::csv_convert::cli_command::{csv_convert, CsvSubCommand};
+use super::gen_pass::gen_pass_command::{deal_gen_pass, GenPassSubCommand};
+use super::base64_text::base64_command::{Base64Sub, Base64DecodeOpts, Base64EncodeOpts, major_clap_base64_decode, major_clap_base64_encode};
 
 /* cli主命令 */
 #[derive(Debug, Parser)]
@@ -15,11 +16,17 @@ struct CliMajor {
 /* 副命令 */
 #[derive(Debug, Parser)]
 pub enum SubCommand {
-    #[command(name = "csv", about = "csv转换")]
-    Csv(CsvCommand),
+    #[command(name = "csv", about = "CSV转换")]
+    Csv(CsvSubCommand),
 
     #[command(name = "gpass", about = "生成随机密码")]
-    GenPass(GenPassCommand),
+    GenPass(GenPassSubCommand),
+
+    #[command(subcommand)]
+    Base64(Base64Sub),
+
+    // #[command(name = "encrypt", about = "文本加密")]
+    // Encrypt(TextEncryptSub),
 }
 
 pub fn major() -> Result<()> {
@@ -31,7 +38,7 @@ pub fn major() -> Result<()> {
     match cli.command {
         SubCommand::Csv(csv_cmd) => {
             println!("{:?}", csv_cmd);
-            let CsvCommand {
+            let CsvSubCommand {
                 format,
                 input,
                 output,
@@ -45,16 +52,26 @@ pub fn major() -> Result<()> {
             };
             csv_convert(format, input, output)?
         }
-        _ => {
-            let GenPassCommand {
+        SubCommand::GenPass(gen_pass_cmd) => {
+            let GenPassSubCommand {
                 length,
                 uppercase,
                 lowercase,
                 number,
                 symbol,
-            } = GenPassCommand::parse();
-            deal_gen_pass(uppercase, lowercase, number, symbol, length)?
-        }
+            } = gen_pass_cmd;
+            let _password: String = deal_gen_pass(uppercase, lowercase, number, symbol, length)?;
+        },
+        SubCommand::Base64(base64_sub) => match base64_sub {
+            Base64Sub::Encode(encode_opts) => {
+                let Base64EncodeOpts { input, format } = encode_opts;
+                major_clap_base64_encode(input, format)?
+            }
+            Base64Sub::Decode(decode_opts) => {
+                let Base64DecodeOpts { input, format } = decode_opts;
+                major_clap_base64_decode(input, format)?
+            }
+        },
     }
 
     Ok(())

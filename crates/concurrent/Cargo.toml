@@ -1,0 +1,9 @@
+[package]
+name = "concurrent"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+
+[dependencies]
+anyhow = { workspace = true }
+rand = { workspace = true }

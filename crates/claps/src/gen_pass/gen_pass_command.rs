@@ -1,8 +1,9 @@
 use clap::Parser;
 use rand::{thread_rng, Rng};
+use zxcvbn::zxcvbn;
 
 #[derive(Debug, Parser)]
-pub struct GenPassCommand {
+pub struct GenPassSubCommand {
     #[arg(long, default_value_t = 16)]
     pub length: u8,
 
@@ -20,7 +21,7 @@ pub struct GenPassCommand {
 }
 
 // TODO ?? 实现CmdExector
-// impl CmdExector for GenPassCommand {
+// impl CmdExector for GenPassSubCommand {
 //     async fn execute(self) -> anyhow::Result<()> {
 //         let ret = crate::process_genpass(
 //             self.length,
@@ -30,7 +31,6 @@ pub struct GenPassCommand {
 //             self.symbol,
 //         )?;
 //         println!("{}", ret);
-
 //         // output password strength in stderr
 //         let estimate = zxcvbn(&ret, &[])?;
 //         eprintln!("Password strength: {}", estimate.score());
@@ -45,7 +45,7 @@ pub fn deal_gen_pass(
     number: bool,
     symbol: bool,
     length: u8,
-) -> anyhow::Result<()> {
+) -> anyhow::Result<String> {
     let mut rng = thread_rng();
     let mut password: String = String::new();
     let mut chars: Vec<char> = Vec::new();
@@ -68,12 +68,13 @@ pub fn deal_gen_pass(
 
     for _ in 0..length {
         // 随机堆入, 直到长度足够
+        // 或者 shuffle算法
         password.push(chars[rng.gen_range(0..chars.len())]);
     }
 
-    // eprintln!
+    let estimate = zxcvbn(&password, &[])?; // 验证密码强度 zxcvbn
     println!("pass: {}", password);
+    eprintln!("estimate score: {}", estimate.score());
 
-    // TODO 验证密码强度 zxcvbn
-    Ok(())
+    Ok(password)
 }

@@ -3,7 +3,7 @@ use clap::Parser;
 
 // 注意: 这里多了一层嵌套(三层命令 主/副/副)
 
-// cargo run -- base64 encode --input xy123
+// cargo run -- base64 encode --input Cargo.lock
 
 #[derive(Debug, Parser)]
 pub enum Base64Sub {

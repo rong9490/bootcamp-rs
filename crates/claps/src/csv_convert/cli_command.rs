@@ -2,14 +2,15 @@
 
 use super::output_format::{parse_format, OutputFormat};
 use super::utils::verify_file_exists;
+use anyhow::{anyhow, Error, Result};
 use clap::Parser;
 use csv::{Reader, StringRecord};
 use serde_json::Value;
-use std::fs::File;
 use std::fs;
+use std::fs::File;
 
 #[derive(Debug, Parser)]
-pub struct CsvCommand {
+pub struct CsvSubCommand {
     // 默认读取文件名; 文件存在性验证
     #[arg(long, default_value = "assets/juventus.csv", value_parser = verify_file_exists)]
     pub input: String,
@@ -28,15 +29,15 @@ pub struct CsvCommand {
 }
 
 /* 正式处理转换, 暂先处理3个参数 */
-pub fn csv_convert(format: OutputFormat, input: String, output: String) -> anyhow::Result<()> {
-    println!("输出格式: {}", format);
-    println!("输入文件路径: {}", input);
-    println!("输出文件路径: {}", output);
+pub fn csv_convert(format: OutputFormat, input: String, output: String) -> Result<()> {
+    println!("{} / {} / {}", format, input, output);
     let mut reader: Reader<File> = Reader::from_path(input)?;
     // 读取头部: 双重mut borrow, 需要clone消除错误
     let _headers: StringRecord = reader.headers()?.clone();
     // 生成json对象
     let mut vec_player: Vec<Value> = Vec::with_capacity(128);
+
+    // 迭代器+闭包: let vec_player: Vec<Player> = reader.deserialize().map(|record| record.unwrap()).collect::<Vec<Player>>();
 
     // 暂时不 reader.deserialize(), 限定了数据结构 不够通用
     // StringRecord不包含header的key, 需要用迭代器生成对象
@@ -58,4 +59,29 @@ pub fn csv_convert(format: OutputFormat, input: String, output: String) -> anyho
     fs::write(output, content)?;
 
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_csv_convert_json() {
+        let input: String = String::from("assets/juventus.csv");
+        let output: String = String::from("assets/juventus.json");
+        let format: OutputFormat = OutputFormat::Json;
+
+        let result: Result<(), Error> = csv_convert(format, input, output);
+        assert!(result.is_ok());
+    }
+
+    #[test]
+    fn test_csv_convert_yaml() {
+        let input: String = String::from("assets/juventus.csv");
+        let output: String = String::from("assets/juventus.yaml");
+        let format: OutputFormat = OutputFormat::Yaml;
+
+        let result: Result<(), Error> = csv_convert(format, input, output);
+        assert!(result.is_ok());
+    }
 }
