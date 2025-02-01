@@ -4,6 +4,7 @@ use clap::{command, Parser};
 use super::csv_convert::cli_command::{csv_convert, CsvSubCommand};
 use super::gen_pass::gen_pass_command::{deal_gen_pass, GenPassSubCommand};
 use super::base64_text::base64_command::{Base64Sub, Base64DecodeOpts, Base64EncodeOpts, major_clap_base64_decode, major_clap_base64_encode};
+use super::text_encrypt::text_encrypt_command::{major_clap_text_sign, major_clap_text_verify, TextSignOpts, TextVerifyOpts, TextEncryptSub};
 
 /* cli主命令 */
 #[derive(Debug, Parser)]
@@ -22,11 +23,11 @@ pub enum SubCommand {
     #[command(name = "gpass", about = "生成随机密码")]
     GenPass(GenPassSubCommand),
 
-    #[command(subcommand)]
+    #[command(subcommand)] // 二级嵌套
     Base64(Base64Sub),
 
-    // #[command(name = "encrypt", about = "文本加密")]
-    // Encrypt(TextEncryptSub),
+    #[command(subcommand)] // 二级嵌套
+    Encrypt(TextEncryptSub),
 }
 
 pub fn major() -> Result<()> {
@@ -70,6 +71,21 @@ pub fn major() -> Result<()> {
             Base64Sub::Decode(decode_opts) => {
                 let Base64DecodeOpts { input, format } = decode_opts;
                 major_clap_base64_decode(input, format)?
+            }
+        },
+        SubCommand::Encrypt(text_sub) => match text_sub {
+            TextEncryptSub::Sign(sign_opts) => {
+                let TextSignOpts { input, key, format } = sign_opts;
+                major_clap_text_sign(input, key, format)?
+            }
+            TextEncryptSub::Verify(verify_opts) => {
+                let TextVerifyOpts {
+                    input,
+                    key,
+                    sig,
+                    format,
+                } = verify_opts;
+                major_clap_text_verify(input, key, sig, format)?
             }
         },
     }
