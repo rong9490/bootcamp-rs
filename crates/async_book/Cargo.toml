@@ -1,5 +1,5 @@
 [package]
-name = "macrokata"
+name = "async_book"
 version.workspace = true
 edition.workspace = true
 authors.workspace = true

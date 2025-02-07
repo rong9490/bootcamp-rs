@@ -12,11 +12,13 @@
 [workspace]
 members = ["toolbox", "crates/*"]
 exclude = ["__dummy__"]
+resolver = "2"
 
 [workspace.package]
 version = "0.1.0"
 edition = "2021"
-authors = ["@he"]
+
+authors = ["@hejj"]
 
 [workspace.dependencies]
 serde = { version = "1", features = ["derive"]}

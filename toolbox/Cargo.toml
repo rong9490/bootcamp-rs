@@ -6,6 +6,7 @@ authors = { workspace = true }
 
 [dependencies]
 claps = { path = "../crates/claps" }
+async_book = { path = "../crates/async_book" }
 anyhow = { workspace = true }
 serde = { workspace = true }
 dotenv = { workspace = true }
