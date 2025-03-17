@@ -5,3 +5,4 @@ edition.workspace = true
 authors.workspace = true
 
 [dependencies]
+futures = "0.3.31"
