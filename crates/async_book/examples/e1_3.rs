@@ -1,3 +1,5 @@
+// cargo run --example e1_3
+
 use futures::executor::block_on;
 
 fn main() {
