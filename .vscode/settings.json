@@ -45,4 +45,5 @@
             "iconColour": "#00BFFF"
         }
     },
+    "editor.tabSize": 4,
 }

@@ -2,3 +2,4 @@
 output.*
 log.txt
 __dummy__
+.DS_Store
