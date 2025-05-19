@@ -1,0 +1,8 @@
+[package]
+name = "rustLangBook"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+
+[dependencies]
+rand = { version = "^0.8.5" }

@@ -5,3 +5,7 @@ edition.workspace = true
 authors.workspace = true
 
 [dependencies]
+
+# bin crate 无法 cargo run; 只能 cargo build / cargo test
+# 执行例子: cargo run --package datastruct --example stack
+# 执行例子: cargo run --example stack
