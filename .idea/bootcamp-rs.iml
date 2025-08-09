@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="EMPTY_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/bootcamp/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/bootcamp01/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/legacy/crates/async_book/examples" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/legacy/crates/async_book/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/legacy/crates/claps/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/legacy/crates/commons/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/legacy/crates/concurrent/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/legacy/crates/datastruct/examples" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/legacy/crates/datastruct/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/legacy/crates/rustLangBook/examples" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/legacy/crates/rustLangBook/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/legacy/examples" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/legacy/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/legacy/toolbox/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/section01/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/toolbox/src" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/legacy/target" />
+      <excludeFolder url="file://$MODULE_DIR$/target" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
