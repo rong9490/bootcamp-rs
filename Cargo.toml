@@ -6,9 +6,10 @@ members = [
     "section01",
     "section10",
 ]
+exclude = ["charapp"]
 
 resolver = "2"
-default-members = ["section01"]
+default-members = ["section10"]
 
 [workspace.dependencies]
 rand = "0.8.5"
