@@ -1,45 +1,58 @@
+use anyhow::{Ok, Result};
 use clap::{Parser, command};
-use toolbox::{demo::verify_file_exists};
-use toolbox::format::{parse_format, OutputFormat};
-use section01::client_command::client::CliCommand;
+use section01::clap_client::_01_csv_convert::cli_command::{CsvSubCommand, csv_convert};
 
-// 主命令
+/* cli主命令 */
 #[derive(Debug, Parser)]
-#[command(author, version, about, long_about = None)]
-pub struct Opts {
+#[command(name = "rcli", version = "1.0.0", author = "@hejj")]
+struct CliMajor {
     #[command(subcommand)]
-    cmd: SubCommand,
+    command: SubCommand,
 }
 
-// 二级命令
+/* 副命令 */
 #[derive(Debug, Parser)]
-enum SubCommand {
+pub enum SubCommand {
     #[command(name = "csv", about = "CSV转换")]
     Csv(CsvSubCommand),
+    // #[command(name = "gpass", about = "生成随机密码")]
+    // GenPass(GenPassSubCommand),
+    // #[command(subcommand)] // 二级嵌套
+    // Base64(Base64Sub),
+    // #[command(subcommand)] // 二级嵌套
+    // Encrypt(TextEncryptSub),
 }
 
-// 二级命令的具体参数
-#[derive(Debug, Parser)]
-pub struct CsvSubCommand {
-    // 默认读取文件名; 文件存在性验证
-    #[arg(long, default_value = "assets/juventus.csv", value_parser = verify_file_exists)]
-    pub input: String,
+// 简单命令: cargo run -- csv
+// 完整命令: cargo run -- csv --format yaml --input crates/claps/assets/juventus.csv --output crates/claps/assets/juventus.json
+fn main() -> Result<()> {
+    println!("Section01 - 终端应用!");
+    // 命令行实例解析
+    let cli: CliMajor = CliMajor::parse();
+    println!("{:#?}", cli);
 
-    #[arg(long)]
-    pub output: Option<String>, // 可选的输出文件名
+    let command: SubCommand = cli.command;
 
-    #[arg(long, default_value = "json", value_parser = parse_format)]
-    pub format: OutputFormat, // 输出的格式, 默认yaml, 字符串转为枚举项
+    match command {
+        SubCommand::Csv(csv_cmd) => {
+            // println!("{:?}", csv_cmd);
+            let CsvSubCommand {
+                format,
+                input,
+                output,
+                delimiter: _delimiter,
+                skip_header: _skip_header,
+            } = csv_cmd;
 
-    #[arg(long, default_value_t = ',')]
-    pub delimiter: char, // 分隔符, 默认逗号
+            let output: String = if let Some(output) = output {
+                output.clone()
+            } else {
+                format!("output.{}", format) // 缺省输出位置
+            };
+            csv_convert(format, input, output)?
+        }
+        _ => unreachable!(),
+    }
 
-    #[arg(long, default_value_t = true)]
-    pub skip_header: bool, // 是否跳过表头, 默认跳过
-}
-
-// rcli csv -i input.csv -o output.json
-fn main() {
-    println!("Hello, Section01!");
-    // println!("{:#?}", CliCommand {});
+    Ok(())
 }
