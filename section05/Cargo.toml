@@ -13,3 +13,5 @@ thiserror = "2.0.16"
 tokio = { workspace = true, features = ["rt", "rt-multi-thread", "macros", "net"] }
 tracing-subscriber = { version = "0.3.18", features = ["env-filter"] }
 tracing = "0.1.40"
+utoipa = { version = "4.2.0", features = ["axum_extras", "chrono"] }
+argon2 = { version = "0.5.3", features = ["std"] }
