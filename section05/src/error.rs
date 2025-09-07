@@ -13,6 +13,7 @@ pub struct ErrorOutput {
 }
 
 impl ErrorOutput {
+    // HINT impl Into<String>
     pub fn new(error: impl Into<String>) -> Self {
         Self { error: error.into() }
     }
@@ -37,7 +38,7 @@ pub enum AppError {
     NotFound(String),
 
     #[error("io error: {0}")]
-    IoError(#[from] std::io::Error),
+    IoError(#[from] std::io::Error), // TODO 理解 #[from] 宏
 
     #[error("sql error: {0}")]
     SqlxError(#[from] sqlx::Error),
