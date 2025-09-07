@@ -1,0 +1,15 @@
+[package]
+name = "section05"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+anyhow.workspace = true
+axum = { workspace = true, features = ["http2", "multipart", "query", "tracing"] }
+serde = { workspace = true, features = ["derive"] }
+serde_yaml.workspace = true
+sqlx = { version = "0.8.6", features = ["postgres", "runtime-tokio-rustls"] }
+thiserror = "2.0.16"
+tokio = { workspace = true, features = ["rt", "rt-multi-thread", "macros", "net"] }
+tracing-subscriber = { version = "0.3.18", features = ["env-filter"] }
+tracing = "0.1.40"

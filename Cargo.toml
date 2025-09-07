@@ -1,15 +1,16 @@
 [workspace]
 
+resolver = "2"
 members = [
     "bootcamp",
     "toolbox",
     "section01",
     "section10",
+    "axum_web", 
+    "section05",
 ]
+default-members = ["section05"]
 exclude = ["charapp"]
-
-resolver = "2"
-default-members = ["section01"]
 
 [workspace.dependencies]
 rand = "0.9.2"
