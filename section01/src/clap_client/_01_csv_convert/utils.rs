@@ -1,4 +1,14 @@
 use std::path::Path;
+use crate::clap_client::_01_csv_convert::output_format::OutputFormat;
+
+pub fn get_csv_output_filename(output: Option<String>, format: OutputFormat) -> String {
+    let output: String = if let Some(output) = output {
+        output.clone()
+    } else {
+        format!("default_output.{}", format) // 缺省输出文件名
+    };
+    output
+}
 
 // 校验文件存在与否(带后缀)
 // Result<String, String / &'static str> 暂时兼容对外

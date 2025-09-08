@@ -6,7 +6,6 @@ edition = "2024"
 [dependencies]
 toolbox = { path = "../toolbox" }
 rand = { workspace = true }
-# feature = deliver 允许宏特性
 clap = { workspace = true }
 anyhow = { workspace = true }
 serde = { workspace = true }

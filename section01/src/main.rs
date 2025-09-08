@@ -1,6 +1,6 @@
 use anyhow::{Ok, Result};
 use clap::{Parser, command};
-use section01::clap_client::_01_csv_convert::cli_command::{CsvSubCommand, csv_convert};
+use section01::clap_client::_01_csv_convert::{cli_command::{csv_convert, CsvSubCommand}, utils::get_csv_output_filename};
 
 /* cli主命令 */
 #[derive(Debug, Parser)]
@@ -24,7 +24,7 @@ pub enum SubCommand {
 }
 
 // 简单命令: cargo run -- csv
-// 完整命令: cargo run -- csv --format yaml --input crates/claps/assets/juventus.csv --output crates/claps/assets/juventus.json
+// 完整命令: cargo run -- csv --format yaml --input assets/juventus.csv --output assets/juventus.yaml
 fn main() -> Result<()> {
     println!("Section01 - 终端应用!");
     // 命令行实例解析
@@ -32,10 +32,10 @@ fn main() -> Result<()> {
     println!("{:#?}", cli);
 
     let command: SubCommand = cli.command;
+    println!("具体命令: {:?}", command);
 
     match command {
         SubCommand::Csv(csv_cmd) => {
-            // println!("{:?}", csv_cmd);
             let CsvSubCommand {
                 format,
                 input,
@@ -43,12 +43,8 @@ fn main() -> Result<()> {
                 delimiter: _delimiter,
                 skip_header: _skip_header,
             } = csv_cmd;
+            let output: String = get_csv_output_filename(output, format);
 
-            let output: String = if let Some(output) = output {
-                output.clone()
-            } else {
-                format!("output.{}", format) // 缺省输出位置
-            };
             csv_convert(format, input, output)?
         }
         _ => unreachable!(),
