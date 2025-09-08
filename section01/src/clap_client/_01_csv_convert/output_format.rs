@@ -3,26 +3,25 @@
 use std::{fmt, str::FromStr};
 
 // 签名: pub trait FromStr: Sized {}
-// 输出文件格式枚举
-#[derive(Debug, Clone, Copy,)]
+// 输出文件格式枚举 + 及其方法
+#[derive(Debug, Clone, Copy)]
 pub enum OutputFormat {
     Json,
     Yaml,
 }
 
-// 类型收窄: 将字符串转换为枚举项
+// 类型收窄: 将字符串转为OutputFormat, 不满足则抛错
 pub fn parse_format(format_str: &str) -> Result<OutputFormat, anyhow::Error> {
-    // (&str).trim() -> &str
     match format_str.trim() {
         "json" => Ok(OutputFormat::Json),
         "yaml" => Ok(OutputFormat::Yaml),
-        _ => Err(anyhow::anyhow!("Invalid format type: {}", format_str)),
+        _ => Err(anyhow::anyhow!("Invalid format type: {}", format_str)), // TODO 后续全局自定义错误枚举
     }
 }
 
 /* === FromStr Trait === */
 
-// 从 "枚举项" --> 字符串
+// 从 "枚举项" --> 字符串, 实现后可以调用to_string()方法
 impl From<OutputFormat> for &'static str {
     fn from(format_str: OutputFormat) -> Self {
         match format_str {
@@ -39,19 +38,16 @@ impl FromStr for OutputFormat {
     type Err = anyhow::Error; // 上下文错误类型
 
     fn from_str(str: &str) -> Result<Self, Self::Err> {
-        match str.to_lowercase().as_str() {
-            "json" => Ok(OutputFormat::Json),
-            "yaml" => Ok(OutputFormat::Yaml),
-            _ => Err(anyhow::anyhow!("Invalid format type: {}", str)),
-        }
+        parse_format(str)
     }
 }
 
 /* === Display Trait === */
 
+// 实现打印
 impl fmt::Display for OutputFormat {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        // 两行代码有什么差别 ??
+        // 两行代码有什么差别?
         // write!(f, "{}", self.into())
         write!(f, "{}", Into::<&str>::into(*self)) // 声明周期, 隐式转换
     }
@@ -71,11 +67,23 @@ mod tests {
     #[test]
     fn test_from_str() {
         // 小写
-        assert!(matches!("json".parse::<OutputFormat>().unwrap(), OutputFormat::Json));
-        assert!(matches!("yaml".parse::<OutputFormat>().unwrap(), OutputFormat::Yaml));
+        assert!(matches!(
+            "json".parse::<OutputFormat>().unwrap(),
+            OutputFormat::Json
+        ));
+        assert!(matches!(
+            "yaml".parse::<OutputFormat>().unwrap(),
+            OutputFormat::Yaml
+        ));
         // 大写
-        assert!(matches!("JSON".parse::<OutputFormat>().unwrap(), OutputFormat::Json));
-        assert!(matches!("YAML".parse::<OutputFormat>().unwrap(), OutputFormat::Yaml));
+        assert!(matches!(
+            "JSON".parse::<OutputFormat>().unwrap(),
+            OutputFormat::Json
+        ));
+        assert!(matches!(
+            "YAML".parse::<OutputFormat>().unwrap(),
+            OutputFormat::Yaml
+        ));
     }
 
     #[test]

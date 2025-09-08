@@ -1,5 +1,5 @@
 /**
- * 核心数据结构, 序列化, 反序列化
+ * 核心数据结构, 及其序列化+反序列化(自动Trait)
  */
 use serde::{Deserialize, Serialize};
 

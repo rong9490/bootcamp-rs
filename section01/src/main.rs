@@ -1,6 +1,11 @@
 use anyhow::{Ok, Result};
 use clap::{Parser, command};
-use section01::clap_client::_01_csv_convert::{cli_command::{csv_convert, CsvSubCommand}, utils::get_csv_output_filename};
+
+// 第一章, 第一小节: _01_csv_convert
+use section01::clap_client::_01_csv_convert::{
+    cli_command::{CsvSubCommand, csv_convert},
+    utils::get_csv_output_filename,
+};
 
 /* cli主命令 */
 #[derive(Debug, Parser)]
@@ -13,7 +18,7 @@ struct CliMajor {
 /* 副命令 */
 #[derive(Debug, Parser)]
 pub enum SubCommand {
-    #[command(name = "csv", about = "CSV转换")]
+    #[command(name = "csv", about = "CSV转换")] // 第一小节内容
     Csv(CsvSubCommand),
     // #[command(name = "gpass", about = "生成随机密码")]
     // GenPass(GenPassSubCommand),
@@ -23,10 +28,10 @@ pub enum SubCommand {
     // Encrypt(TextEncryptSub),
 }
 
-// 简单命令: cargo run -- csv
-// 完整命令: cargo run -- csv --format yaml --input assets/juventus.csv --output assets/juventus.yaml
 fn main() -> Result<()> {
     println!("Section01 - 终端应用!");
+    tracing_subscriber::fmt::init(); // 日志追踪
+
     // 命令行实例解析
     let cli: CliMajor = CliMajor::parse();
     println!("{:#?}", cli);
