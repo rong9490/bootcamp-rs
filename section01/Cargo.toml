@@ -17,3 +17,5 @@ tokio = { workspace = true }
 axum = { workspace = true }
 tracing = { workspace = true }
 tracing-subscriber = { workspace = true }
+# TODO 什么作用
+enum_dispatch = "0.3.12"
