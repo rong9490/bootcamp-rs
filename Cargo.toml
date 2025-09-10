@@ -8,9 +8,10 @@ members = [
     "section01",
     "section10",
     "section05",
+    "01-rcli",
 ]
 default-members = ["section01"]
-exclude = ["charapp", ".dummys/01-rcli"]
+exclude = ["charapp"]
 
 [workspace.dependencies]
 rand = "0.9.2"
@@ -25,4 +26,4 @@ tokio = { version = "1.36.0", features = ["rt", "rt-multi-thread", "macros", "ne
 axum = { version = "0.7.4", features = ["http2", "query", "tracing"] }
 tracing = "0.1.40"
 tracing-subscriber = { version = "0.3.18", features = ["env-filter"] }
-enum_dispatch = "=0.3.12"
+enum_dispatch = "0.3.12"

@@ -1,4 +1,4 @@
-use super::CmdExector;
+use crate::CmdExector;
 
 use super::verify_file;
 use clap::Parser;
@@ -30,14 +30,12 @@ pub struct CsvOpts {
 
 impl CmdExector for CsvOpts {
     async fn execute(self) -> anyhow::Result<()> {
-        // let output = if let Some(output) = self.output {
-        //     output
-        // } else {
-        //     format!("output.{}", self.format)
-        // };
-        // crate::process_csv(&self.input, output, self.format)
-        println!("CsvOpts CmdExector!!");
-        Ok(())
+        let output = if let Some(output) = self.output {
+            output
+        } else {
+            format!("output.{}", self.format)
+        };
+        crate::process_csv(&self.input, output, self.format)
     }
 }
 

@@ -1,15 +1,14 @@
+mod base64;
 mod csv;
+mod genpass;
+mod http;
+mod text;
+
 use clap::Parser;
 use enum_dispatch::enum_dispatch;
 use std::path::{Path, PathBuf};
 
-pub use self::csv::*;
-
-#[allow(async_fn_in_trait)]
-#[enum_dispatch]
-pub trait CmdExector {
-    async fn execute(self) -> anyhow::Result<()>;
-}
+pub use self::{base64::*, csv::*, genpass::*, http::*, text::*};
 
 #[derive(Debug, Parser)]
 #[command(name = "rcli", version, author, about, long_about = None)]
