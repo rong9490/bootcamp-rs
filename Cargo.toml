@@ -7,8 +7,7 @@ members = [
     "axum_web", 
     "section01",
     "section10",
-    "section05",
-    "01-rcli",
+    "section05"
 ]
 default-members = ["section01"]
 exclude = ["charapp"]
@@ -27,3 +26,5 @@ axum = { version = "0.7.4", features = ["http2", "query", "tracing"] }
 tracing = "0.1.40"
 tracing-subscriber = { version = "0.3.18", features = ["env-filter"] }
 enum_dispatch = "0.3.12"
+blake3 = "1.8.2"
+base64 = "0.22.0"
