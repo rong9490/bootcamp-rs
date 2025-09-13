@@ -1,6 +1,6 @@
-use crate::clap_client::clienting::csv::OutputFormat;
 use anyhow::Result;
 use serde::{Deserialize, Serialize};
+use crate::clap_client::clienting::csv::OutputFormat;
 
 // 核心数据结构, 及其序列化+反序列化(自动Trait)
 #[derive(Debug, Deserialize, Serialize)]

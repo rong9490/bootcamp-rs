@@ -1,3 +1,4 @@
 // 专注于命令的执行处理!(两端解耦)
 
 pub mod csv;
+pub mod genpass;

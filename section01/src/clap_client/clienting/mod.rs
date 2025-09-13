@@ -1,6 +1,7 @@
 // 专注处理命令行相关的内容!
 
 pub mod csv;
+pub mod genpass;
 
 use self::csv::CsvOpts;
 use super::utils::CmdExector;
