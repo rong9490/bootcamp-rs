@@ -1,5 +1,7 @@
-/* 格式化, 涉及到: From Trait 和 Into Trait */
+use crate::CmdExector;
 
+use super::verify_file;
+use clap::Parser;
 use std::{fmt, str::FromStr};
 
 // 签名: pub trait FromStr: Sized {}
@@ -8,6 +10,37 @@ use std::{fmt, str::FromStr};
 pub enum OutputFormat {
     Json,
     Yaml,
+}
+
+// 子命令参数
+#[derive(Debug, Parser)]
+pub struct CsvOpts {
+    #[arg(short, long, value_parser = verify_file)]
+    pub input: String,
+
+    #[arg(short, long)] // "output.json".into()
+    pub output: Option<String>,
+
+    #[arg(long, value_parser = parse_format, default_value = "json")]
+    pub format: OutputFormat,
+
+    #[arg(short, long, default_value_t = ',')]
+    pub delimiter: char,
+
+    #[arg(long, default_value_t = true)]
+    pub header: bool,
+}
+
+// 实现执行方法
+impl CmdExector for CsvOpts {
+    async fn execute(self) -> anyhow::Result<()> {
+        let output = if let Some(output) = self.output {
+            output
+        } else {
+            format!("output.{}", self.format)
+        };
+        crate::clap_client::processing::csv::process_csv(&self.input, output, self.format)
+    }
 }
 
 // 类型收窄: 将字符串转为OutputFormat, 不满足则抛错

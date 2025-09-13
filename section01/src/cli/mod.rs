@@ -7,6 +7,7 @@ mod text;
 use clap::Parser;
 use enum_dispatch::enum_dispatch;
 use std::path::{Path, PathBuf};
+use crate::clap_client::utils::CmdExector;
 
 pub use self::{base64::*, csv::*, genpass::*, http::*, text::*};
 
