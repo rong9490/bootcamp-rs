@@ -7,9 +7,10 @@ members = [
     "axum_web", 
     "section01",
     "section10",
-    "section05"
+    "section05",
+    "section02",
 ]
-default-members = ["section01"]
+default-members = ["section02"]
 exclude = ["charapp"]
 
 [workspace.dependencies]
@@ -28,3 +29,4 @@ tracing-subscriber = { version = "0.3.18", features = ["env-filter"] }
 enum_dispatch = "0.3.12"
 blake3 = "1.8.2"
 base64 = "0.22.0"
+dashmap = "6.1.0"
