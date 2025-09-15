@@ -2,8 +2,10 @@
 
 pub mod csv;
 pub mod genpass;
+// pub mod base64;
 
 use self::csv::CsvOpts;
+use self::genpass::GenPassOpts;
 use super::utils::CmdExector;
 use clap::Parser;
 use enum_dispatch::enum_dispatch;
@@ -22,6 +24,9 @@ pub struct Opts {
 pub enum SubCommand {
     #[command(name = "csv", about = "Show CSV, or convert CSV to other formats")]
     Csv(CsvOpts),
+
+    #[command(name = "genpass", about = "Generate a random password")]
+    GenPass(GenPassOpts),
 }
 
 fn verify_file(filename: &str) -> Result<String, &'static str> {

@@ -1,5 +1,5 @@
 use enum_dispatch::enum_dispatch;
-use crate::clap_client::clienting::csv::CsvOpts;
+use crate::clap_client::clienting::{csv::CsvOpts, genpass::GenPassOpts};
 use crate::clap_client::clienting::SubCommand;
 
 // 每个子命令都需要实现各自的执行器, 供父级枚举调用(解耦)
