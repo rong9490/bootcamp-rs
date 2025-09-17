@@ -10,3 +10,5 @@ __dummy__
 .dummy.01-rcli
 target
 juventus.yaml
+.dummy.02-concurrency
+section02/dummy

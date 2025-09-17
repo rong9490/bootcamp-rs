@@ -1,4 +1,5 @@
 // 官方demo
+// 教程文档 https://kirigaya.cn/blog/article?seq=289
 extern crate proc_macro;
 
 // the `#[proc_macro_derive]` attribute is only usable with crates of the `proc-macro` crate type
