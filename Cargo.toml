@@ -8,9 +8,10 @@ members = [
     "section01",
     "section10",
     "section05",
-    "section02", "section03",
+    "section02",
+    "section03",
 ]
-default-members = ["section02"]
+default-members = ["bootcamp"]
 exclude = ["charapp"]
 
 [workspace.dependencies]
@@ -31,3 +32,4 @@ enum_dispatch = "0.3.12"
 blake3 = "1.8.2"
 base64 = "0.22.0"
 dashmap = "6.1.0"
+dotenv = "0.15.0"

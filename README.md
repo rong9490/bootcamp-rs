@@ -10,6 +10,8 @@
     cargo new --bin
     cargo init app --bin
     cargo init crates/claps --lib
+
+    cargo init theRustProgrammingLanguage --bin
     
     执行具体crate, 进入子目录 cargo run --example xx
     

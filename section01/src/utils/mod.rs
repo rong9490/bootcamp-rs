@@ -1,3 +1,5 @@
+pub mod env;
+
 use anyhow::Result;
 use base64::{
     Engine as _,

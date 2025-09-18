@@ -1,5 +1,5 @@
-pub mod clap_client;
 pub mod utils;
+pub mod clap_client;
 
 // mod cli;
 // mod process;
