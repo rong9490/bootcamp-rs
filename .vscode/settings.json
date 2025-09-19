@@ -1,49 +1,46 @@
 {
-    /* ---- Todo Tree配置 ---- */
-    "todo-tree.general.tags": [
-        "TODO",
-        "HACK",
-        "FIXME",
-        "NOTE",
-        "Okk"
-    ],
-    "todo-tree.regex.regex": "(//|#|<!--|;|/\\*|^|^\\s*(-|\\d+.))\\s*($TAGS)",
-    "todo-tree.regex.regexCaseSensitive": false, // 忽略大小写
-    "todo-tree.highlights.customHighlight": {
-        "HACK": {
-            "foreground": "#fff",
-            "background": "#008000",
-            "icon": "check-circle-fill",
-            "rulerColour": "#008000",
-            "iconColour": "#008000"
-        },
-        "FIXME": {
-            "foreground": "#fff",
-            "background": "#4169E1",
-            "icon": "gear",
-            "rulerColour": "#4169E1",
-            "iconColour": "#4169E1"
-        },
-        "TODO": {
-            "foreground": "#228B22",
-            "background": "#87CEFA",
-            "rulerColour": "#87CEFA",
-            "iconColour": "#87CEFA"
-        },
-        "NOTE": {
-            "foreground": "#228B22",
-            "icon": "bookmark-fill",
-            "background": "#00BFFF",
-            "rulerColour": "#00BFFF",
-            "iconColour": "#00BFFF"
-        },
-        "Okk": {
-            "foreground": "#228B22",
-            "icon": "bookmark-fill",
-            "background": "#00BFFF",
-            "rulerColour": "#00BFFF",
-            "iconColour": "#00BFFF"
-        }
+  "editor.tabSize": 4,
+  "github.copilot.enable": {
+    "*": false
+  },
+  /* ---- Todo Tree配置 ---- */
+  "todo-tree.general.tags": ["TODO", "HACK", "FIXME", "NOTE", "Okk"],
+  "todo-tree.regex.regex": "(//|#|<!--|;|/\\*|^|^\\s*(-|\\d+.))\\s*($TAGS)",
+  "todo-tree.regex.regexCaseSensitive": false, // 忽略大小写
+  "todo-tree.highlights.customHighlight": {
+    "HACK": {
+      "foreground": "#fff",
+      "background": "#008000",
+      "icon": "check-circle-fill",
+      "rulerColour": "#008000",
+      "iconColour": "#008000"
     },
-    "editor.tabSize": 4,
+    "FIXME": {
+      "foreground": "#fff",
+      "background": "#4169E1",
+      "icon": "gear",
+      "rulerColour": "#4169E1",
+      "iconColour": "#4169E1"
+    },
+    "TODO": {
+      "foreground": "#228B22",
+      "background": "#87CEFA",
+      "rulerColour": "#87CEFA",
+      "iconColour": "#87CEFA"
+    },
+    "NOTE": {
+      "foreground": "#228B22",
+      "icon": "bookmark-fill",
+      "background": "#00BFFF",
+      "rulerColour": "#00BFFF",
+      "iconColour": "#00BFFF"
+    },
+    "Okk": {
+      "foreground": "#228B22",
+      "icon": "bookmark-fill",
+      "background": "#00BFFF",
+      "rulerColour": "#00BFFF",
+      "iconColour": "#00BFFF"
+    }
+  }
 }
