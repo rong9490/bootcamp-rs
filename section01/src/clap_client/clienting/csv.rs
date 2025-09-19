@@ -1,6 +1,6 @@
-use std::{fmt, str::FromStr};
-use clap::Parser;
 use super::{CmdExector, verify_file};
+use clap::Parser;
+use std::{fmt, str::FromStr};
 
 // 签名: pub trait FromStr: Sized {}
 // 输出文件格式枚举 + 及其方法

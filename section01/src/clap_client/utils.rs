@@ -1,3 +1,4 @@
+use std::path::Path;
 use enum_dispatch::enum_dispatch;
 use crate::clap_client::clienting::{csv::CsvOpts, genpass::GenPassOpts};
 use crate::clap_client::clienting::SubCommand;
@@ -11,7 +12,7 @@ pub trait CmdExector {
 
 // use super::clienting::Opts;
 // use crate::clap_client::_01_csv_convert::output_format::OutputFormat;
-// use std::path::Path;
+
 
 // /// csv处理完的输出文件名
 // pub fn get_csv_output_filename(output: Option<String>, format: OutputFormat) -> String {
@@ -39,18 +40,18 @@ pub trait CmdExector {
 //     }
 // }
 
-// // 校验文件存在与否
-// pub fn verify_file_exists(file_name: &str) -> Result<String, &'static str> {
-//     let p: &Path = Path::new(file_name);
-//     if p.exists() {
-//         if !file_name.ends_with(".csv") {
-//             return Err("输入文件必须是CSV文件");
-//         }
-//         Ok(file_name.into())
-//     } else {
-//         Err("输入文件不存在")
-//     }
-// }
+// 校验文件存在与否
+pub fn verify_file_exists(file_name: &str) -> Result<String, &'static str> {
+    let p: &Path = Path::new(file_name);
+    if p.exists() {
+        if !file_name.ends_with(".csv") {
+            return Err("输入文件必须是CSV文件");
+        }
+        Ok(file_name.into())
+    } else {
+        Err("输入文件不存在")
+    }
+}
 
 // // 校验目录存在与否
 // pub fn verify_dirpath_exists(path: &str) -> Result<String, &'static str> {

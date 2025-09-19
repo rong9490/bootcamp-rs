@@ -3,6 +3,7 @@
 pub mod csv;
 pub mod genpass;
 // pub mod base64;
+// pub mod text_encrypt;
 
 use self::csv::CsvOpts;
 use self::genpass::GenPassOpts;

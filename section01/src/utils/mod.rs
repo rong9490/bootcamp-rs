@@ -9,18 +9,19 @@ use std::{fs::File, io::Read};
 
 // use crate::clap_client::clienting::base64::Base64Format;
 
+// Box<dyn Read> Trait对象动态分发
 pub fn get_reader(input: &str) -> Result<Box<dyn Read>> {
     let reader: Box<dyn Read> = if input == "-" {
-        Box::new(std::io::stdin())
+        Box::new(std::io::stdin()) // 标准输入 stdin
     } else {
-        Box::new(File::open(input)?)
+        Box::new(File::open(input)?) // 文件读取 File::open
     };
     Ok(reader)
 }
 
 pub fn get_content(input: &str) -> Result<Vec<u8>> {
-    let mut reader = get_reader(input)?;
-    let mut buf = Vec::new();
+    let mut reader: Box<dyn Read> = get_reader(input)?;
+    let mut buf: Vec<u8> = Vec::new();
     reader.read_to_end(&mut buf)?;
     Ok(buf)
 }

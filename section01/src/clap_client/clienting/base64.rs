@@ -38,6 +38,7 @@ pub enum Base64Format {
     UrlSafe,
 }
 
+// 三件套: parse_format FromStr From
 fn parse_base64_format(format: &str) -> Result<Base64Format, anyhow::Error> {
     format.parse()
 }

@@ -1,11 +1,12 @@
-use std::{fmt, str::FromStr};
-use super::utils::{verify_file_exists};
-use clap::Parser;
-
-// 注意: 这里多了一层嵌套(三层命令 主/副/副)
-
+// 文本编码
 // cargo run -- base64 encode --input xy123
 
+use clap::Parser;
+use std::{fmt, str::FromStr};
+
+use crate::clap_client::utils::verify_file_exists;
+
+// 子命令(注意: 这里是第两层子命令, 共三层)
 #[derive(Debug, Parser)]
 pub enum TextEncryptSub {
     #[command(name = "sign", about = "签名")]
@@ -15,6 +16,14 @@ pub enum TextEncryptSub {
     Verify(TextVerifyOpts),
 }
 
+// 文本签名格式枚举
+#[derive(Debug, Clone, Copy)]
+pub enum TextSignFormat {
+    Blake3,
+    Sha256,
+}
+
+// 签名参数
 #[derive(Debug, Parser)]
 pub struct TextSignOpts {
     #[arg(long, value_parser = verify_file_exists, default_value = "-")]
@@ -27,6 +36,7 @@ pub struct TextSignOpts {
     pub format: TextSignFormat,
 }
 
+// 验证参数
 #[derive(Debug, Parser)]
 pub struct TextVerifyOpts {
     #[arg(long, value_parser = verify_file_exists, default_value = "-")]
@@ -42,13 +52,7 @@ pub struct TextVerifyOpts {
     pub format: TextSignFormat,
 }
 
-#[derive(Debug, Clone, Copy)]
-pub enum TextSignFormat {
-    Blake3,
-    Sha256,
-}
-
-// 照旧 三件套
+// 三件套: parse_from From FromStr
 pub fn parse_format(format: &str) -> Result<TextSignFormat, anyhow::Error> {
     format.parse()
 }
@@ -80,12 +84,22 @@ impl fmt::Display for TextSignFormat {
     }
 }
 
-pub fn major_clap_text_sign(input: String, key: String, format: TextSignFormat) -> anyhow::Result<()> {
-    // process_encode(&input, format)?;
-    Ok(())
-}
+// TODO 丢到processing执行
+// pub fn major_clap_text_sign(
+//     input: String,
+//     key: String,
+//     format: TextSignFormat,
+// ) -> anyhow::Result<()> {
+//     // process_encode(&input, format)?;
+//     Ok(())
+// }
 
-pub fn major_clap_text_verify(input: String, key: String, sig: String, format: TextSignFormat) -> anyhow::Result<()> {
-    // process_decode(&input, format)?;
-    Ok(())
-}
+// pub fn major_clap_text_verify(
+//     input: String,
+//     key: String,
+//     sig: String,
+//     format: TextSignFormat,
+// ) -> anyhow::Result<()> {
+//     // process_decode(&input, format)?;
+//     Ok(())
+// }

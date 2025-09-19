@@ -1,0 +1,5 @@
+{
+  "github.copilot.enable": {
+    "*": false, // 关闭所有语言Copilot
+  }
+}
