@@ -369,6 +369,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "books"
+version = "0.1.0"
+
+[[package]]
 name = "bootcamp"
 version = "0.1.0"
 dependencies = [

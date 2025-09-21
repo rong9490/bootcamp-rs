@@ -10,6 +10,7 @@ members = [
     "section05",
     "section02",
     "section03",
+    "books",
 ]
 default-members = ["bootcamp"]
 exclude = ["charapp"]

@@ -1,3 +1,5 @@
+fn main() {}
+
 #[derive(Debug)]
 pub enum Cereal {
     Barley,
