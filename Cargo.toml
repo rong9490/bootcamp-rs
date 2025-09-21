@@ -2,7 +2,6 @@
 
 resolver = "2"
 members = [
-    "bootcamp",
     "toolbox",
     "axum_web", 
     "section01",
@@ -12,7 +11,7 @@ members = [
     "section03",
     "books",
 ]
-default-members = ["bootcamp"]
+default-members = ["section02"]
 exclude = ["charapp"]
 
 [workspace.dependencies]

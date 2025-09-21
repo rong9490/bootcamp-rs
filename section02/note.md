@@ -25,6 +25,8 @@
   作为划分 --> 组件数据结构"具有传染性"
 
   T 可能需要传送回去, 'static 所有权
+
+  后续: Mutex, Arc+Mutex, thread::scope
 ```
 
 ```

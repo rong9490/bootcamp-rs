@@ -35,6 +35,8 @@ fn main() -> Result<()> {
         thread::spawn(move || producer(i, tx1)); // 能放闭包的地方一定也能放函数
     }
 
+    drop(tx); // 明确释放
+
     // 创建消费者
     let consumer = thread::spawn(move || {
         // 闭包内自动捕获(move)了rx(没有实现Copy Trait), 所以主线程已经失去了rx的所有权, 后续不可再使用!
@@ -46,7 +48,7 @@ fn main() -> Result<()> {
     // variable moved due to use in closure
     // rx.recv()?;
 
-    // consumer.join()?; anyhow也没有实现对join的异常处理 --> map_err 做一层转换
+    // HINT consumer.join()?; anyhow也没有实现对join的异常处理 --> map_err 做一层转换
     consumer.join().map_err(|e| anyhow::anyhow!("Thread join error: {:?}", e))?;
 
     Ok(())
