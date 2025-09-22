@@ -1,6 +1,6 @@
 fn main() {}
 
-// TODO 补充书内容
+// TODO 补充书内容legacy当中
 
 #[derive(Debug)]
 pub enum Cereal {
