@@ -80,3 +80,63 @@ mod chapter15 {
         println!("{:?}", std::mem::size_of_val(&list)); // 理解:16byte
     }
 }
+
+#[cfg(test)]
+mod chapter16 {
+    use std::sync::mpsc;
+    use std::thread;
+    use std::time::Duration;
+
+    #[test]
+    fn thread01() {
+        // 这里会交替输出...这是因为sleep会暂停线程, 交给另外的执行
+        let handle = thread::spawn(|| {
+            for i in 1..=5 {
+                println!("hi num {i} from the spawned thread!");
+                thread::sleep(Duration::from_millis(10));
+            }
+        });
+        // 如果在main循环前
+        handle.join().unwrap();
+
+        for i in 1..=5 {
+            println!("yo num {i} from the main thread!");
+            thread::sleep(Duration::from_millis(10));
+        }
+        // 如果在最后
+        // handle.join().unwrap();
+    }
+
+    #[test]
+    fn thread02_move() {
+        let v: Vec<i32> = vec![1, 2, 3, 4];
+
+        // 编译报错: may outlive borrowed value `v`
+        // 提示需要 move 转移所有权
+        let handle = thread::spawn(move || {
+            println!("Here is {:?}", v);
+            drop(v); // ✅
+        });
+
+        // 编译报错: value used here after move
+        // drop(v);
+
+        handle.join().unwrap();
+    }
+
+    #[test]
+    fn sync_mpsc01() {
+        let (tx, rx) = mpsc::channel::<String>();
+
+        thread::spawn(move || {
+            let val: String = String::from("hi");
+            tx.send(val).unwrap(); // 这里send后已经转移了所有权
+            // 编译错误: value used here after move
+            // drop(val);
+        });
+
+        let received: String = rx.recv().unwrap();
+        println!("Got: {received}");
+        drop(received); // ✅ 所有权到这边了, 负责释放内存
+    }
+}
