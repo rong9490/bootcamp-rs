@@ -9,9 +9,10 @@ members = [
     "section05",
     "section02",
     "section03",
+    "section04",
     "books",
 ]
-default-members = ["section02"]
+default-members = ["section04"]
 exclude = ["charapp"]
 
 [workspace.dependencies]
