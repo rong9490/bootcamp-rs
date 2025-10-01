@@ -13,6 +13,6 @@
 //     }
 // }
 
-pub mod book_language; // Rust权威指南
-pub mod book_algorithm; // Rust数据结构与算法
-pub mod book_practice; // Rust实战
+// pub mod book_language; // Rust权威指南
+// pub mod book_algorithm; // Rust数据结构与算法
+// pub mod book_practice; // Rust实战
