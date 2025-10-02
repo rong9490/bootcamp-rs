@@ -6,10 +6,6 @@
 
 use std::collections::HashMap;
 
-fn main() -> () {
-    println!("lesson_lxqx07.rs!")
-}
-
 #[derive(Debug)]
 struct QueryParser {
     query: String,
