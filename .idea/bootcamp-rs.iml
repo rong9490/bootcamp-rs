@@ -18,6 +18,18 @@
       <sourceFolder url="file://$MODULE_DIR$/legacy/toolbox/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/section01/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/toolbox/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/axum_web/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/books/examples" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/books/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/section01/examples" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/section02/examples" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/section02/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/section03/examples" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/section03/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/section04/examples" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/section04/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/section05/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/section10/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/legacy/target" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>

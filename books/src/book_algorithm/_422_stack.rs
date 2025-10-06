@@ -1,4 +1,4 @@
-// 实现栈结构
+/** 实现栈结构 */ 
 
 // 如果是固定大小型
 struct StackFixed<T, const N: usize> {
@@ -88,7 +88,7 @@ impl<T> Stack<T> {
 }
 
 // 实现三种迭代功能
-struct IntoIter<T>(Stack<T>); // Tuple型结构体
+pub struct IntoIter<T>(Stack<T>); // Tuple型结构体
 impl<T: Clone> Iterator for IntoIter<T> {
     type Item = T; // 关联类型
     // 迭代行为
@@ -102,7 +102,7 @@ impl<T: Clone> Iterator for IntoIter<T> {
     }
 }
 
-struct Iter<'a, T: 'a> {
+pub struct Iter<'a, T: 'a> {
     stack: Vec<&'a T>,
 }
 impl<'a, T> Iterator for Iter<'a, T> {
@@ -113,7 +113,7 @@ impl<'a, T> Iterator for Iter<'a, T> {
     }
 }
 
-struct IterMut<'a, T: 'a> {
+pub struct IterMut<'a, T: 'a> {
     stack: Vec<&'a mut T>,
 }
 impl<'a, T> Iterator for IterMut<'a, T> {

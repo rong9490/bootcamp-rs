@@ -9,7 +9,7 @@ fn par_checker1(par: &str) -> bool {
     for c in par.chars() { char_list.push(c); }
 
     let mut idx = 0;
-    let mut balance = true;
+    let mut balance: bool = true;
     let mut stack: Stack<char> = Stack::new();
 
     // while idx < char_list.len() && balance {
