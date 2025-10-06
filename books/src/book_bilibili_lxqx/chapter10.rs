@@ -27,6 +27,13 @@
   Cell的用法(较少), RefCell
   本质是复制拷贝 cell.take() mem::take()
   *cell.get_mut() = xxx
+  set / take / replace /
+
+  RefCell 常用使用, 内部可变性
+
+  name.borror() / borrow_mut()
+  take, swap, 对应操作类比 mem::xxx
+
  */
 
 /*

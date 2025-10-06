@@ -1,7 +1,7 @@
-use std::io;
 // 预导入模块 std::prelude
-use rand::Rng;
 use std::cmp::Ordering;
+use std::io;
+use rand::Rng;
 
 fn guessing_game01() {
     println!("Gusee the number");

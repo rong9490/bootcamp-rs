@@ -426,6 +426,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "rand 0.9.2",
+ "serde",
  "thiserror",
 ]
 
