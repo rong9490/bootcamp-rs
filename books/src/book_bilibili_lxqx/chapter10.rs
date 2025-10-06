@@ -1,7 +1,39 @@
 // cargo run --example lesson_lxqx10
 /*
- * 7.智能指针
+ * 10.智能指针
+  可调度分派函数的要求!
+  多态: 动态分发, 静态分发
+
+  impl Into<T>
+  asRef
+
+  运行时类型擦除, 函数指针
+  虚表
+  trait对象
+  Box<dyn Person>
+  ?Sized 大小不确定
+
+  类型 p: &dyn Persion 借用不消耗所有权;
+  两种类型是不兼容的
+  let person_ref: &Box<dyn Persopn> = &person
+
+  &Box<dyn Person> / 不会隐式转换
+
+  两种方式解决
+  persion_ref.deref()
+  persion_ref.as_ref()
+
+
+  Cell的用法(较少), RefCell
+  本质是复制拷贝 cell.take() mem::take()
+  *cell.get_mut() = xxx
  */
+
+/*
+  fn deref(&self) -> &T {
+    &**self
+  }
+*/
 
 #[cfg(test)]
 mod tests {
