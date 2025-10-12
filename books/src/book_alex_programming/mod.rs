@@ -3,3 +3,5 @@
 // https://gitee.com/geektime-geekbang/geektime-Rust
 
 pub mod ch01;
+pub mod ch02;
+mod ch03;
