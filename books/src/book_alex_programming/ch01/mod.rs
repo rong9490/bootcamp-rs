@@ -29,6 +29,11 @@
 // 六大词法结构, 词法与语法, rusct, 多道工序
 // Tokens AST HIR MIR LLVM bits
 // 关键字, 标志符, 注释,
+// 常量函数
 
-mod ctfe;
-mod expr;
+// mod block_ctfe;
+// mod expr;
+
+pub mod _07_ctfe_const_generic;
+pub mod _08_ctfe_expr;
+pub mod _09_data_types;
