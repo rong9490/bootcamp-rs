@@ -7,43 +7,6 @@
 //!
 
 /**
-
-### 面向表达式 (Expression-Oriented programming)
-
-```
-use std::collections::HashMap;
-
-fn add_one(i: &mut u32) {
-    *i += 1;
-}
-
-fn plus_one(i: &u32) -> u32 {
-    let i = i + 1;
-    i
-}
-
-fn main() {
-    let mut a = 41 ;
-    add_one(&mut a) ;
-    println!("{:?}", a) ;
-
-    let a = 41;
-    let b = plus_one(&a);
-    println!("{:?}", b) ;
-
-    let mut h = HashMap::new();
-    h.insert("anwser", 42);
-    println!("anwser is {:?}", h["anwser"]);
-}
-```
-*/
-pub fn eop(){
-    println!("1.4 : Expression-Oriented programming");
-}
-
-
-/**
-
 ### 分号表达式 vs 块表达式
 
 1. 分号表达式返回值永远为自身的单元(Unit)类型：`()`
