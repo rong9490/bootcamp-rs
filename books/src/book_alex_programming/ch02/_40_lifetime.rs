@@ -50,7 +50,7 @@ mod return_str {
 
 	#[test]
 	fn aa() {
-		// 结构体被定义时, 泛型T是没有确定的, 只有调用时才被确定
+		// 结构体被定义时, 泛型T是没有确定的, 只有调用时才被确定 --> 所以叫 late bound
 		let _a = A::<i32>(3); // 这里是late bound 为什么? 如何判断
 		let _b = A::<String>("Hello".to_string());
 		let _c = A::<char>(10 as char);
@@ -61,5 +61,24 @@ mod return_str {
 		// 长的: 短的
 		// long: short
 		// 'static: 'a
+
+	}
+
+	struct Buffer<'a> {
+		buf: &'a [u8],
+		pos: usize
+	}
+
+	impl<'a> Buffer<'a> {
+		fn new (b: &'a [u8]) -> Buffer {
+			Buffer {
+				buf: b,
+				pos: 0,
+			}
+		}
+		fn read_bytes(&mut self) -> &'a [u8] {
+			self.pos += 3;
+			&self.buf[self.pos - 3..self.pos]
+		}
 	}
 }
