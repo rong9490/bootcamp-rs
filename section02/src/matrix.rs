@@ -6,9 +6,9 @@ use std::{
     sync::mpsc,
     thread,
 };
-use oneshot; // todo
+use oneshot; // todo 什么作用
 
-// 线程数
+// 常量: 线程数
 const NUM_THREADS: usize = 4;
 
 // [[1, 2], [1, 2], [1, 2]] => [1, 2, 1, 2, 1, 2]
@@ -18,19 +18,20 @@ pub struct Matrix<T> {
     col: usize,
 }
 
-// 线程间输入
+// 线程间输入信息(数据结构)
 pub struct MsgInput<T> {
     idx: usize,
     row: MyVector<T>,
     col: MyVector<T>,
 }
 
-// 线程间输出
+// 线程间输出信息(数据结构)
 pub struct MsgOutput<T> {
     idx: usize,
     value: T,
 }
 
+// 信息数据结构: input / sender 需要额外oneshot::Sender包裹
 pub struct Msg<T> {
     input: MsgInput<T>,
     // sender to send the result back

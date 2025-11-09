@@ -32,10 +32,10 @@ where
 
     // 暂无法使用迭代器sum, 需要添加对应trait zip + map + sum
     // let sum = a.iter().zip(b.iter()).map(|(&a_i, &b_i)| a_i * b_i).sum();
-
     Ok(sum)
 }
 
+// Deref Trait 自定义解引用操作符行为! *T 这是错付行为ops
 impl<T> Deref for MyVector<T> {
     type Target = Vec<T>;
 

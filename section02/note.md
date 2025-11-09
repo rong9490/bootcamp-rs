@@ -52,3 +52,7 @@
 
   
 ```
+
+```
+  FnOnce / Send & Move / 'static
+```

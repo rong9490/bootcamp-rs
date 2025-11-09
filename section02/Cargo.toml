@@ -5,8 +5,9 @@ edition = "2024"
 
 [dependencies]
 anyhow = { workspace = true }
-rand = { workspace = true } # 0.9.2
-# rand = "0.8.5"
+dashmap.workspace = true
+oneshot = "0.1.6" # workspace
+rand = { workspace = true } # 0.9.2 / 0.8.5
+tokio = { workspace = true, features = ["rt", "rt-multi-thread", "macros", "net"] }
 tracing = { workspace = true }
 tracing-subscriber = { workspace = true }
-oneshot = "0.1.6"

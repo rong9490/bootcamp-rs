@@ -25,11 +25,11 @@ mod primitives {
     #[test]
     fn primitives_test() {
         {
-            let answer = "42"; // 创建变量 与 绑定内存地址; 引用, 借用
-            let no_answer = answer;
+            let answer: i32 = "42"; // 创建变量 与 绑定内存地址; 引用, 借用
+            let no_answer: i32 = answer;
 
-            let name = String::from("Joker");
-            let no_name = name;
+            let name: String = String::from("Joker");
+            let no_name: String = name;
 
             // 通过生成 HIR / MIR 查看区别!
             // let mut _0: ();

@@ -9,5 +9,8 @@
 // https://github.com/ZhangHanDong/tao-of-rust-codes 《Rust编程之道》随书源码
 
 // pub mod ch01;
-pub mod ch02;
+// pub mod ch02;
 // pub mod ch03;
+
+pub mod tao01;
+pub mod tao02;
