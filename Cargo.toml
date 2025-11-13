@@ -2,8 +2,6 @@
 
 resolver = "3"
 members = [
-    "toolbox",
-    "axum_web", 
     "section01",
     "section10",
     "section05",
@@ -11,6 +9,8 @@ members = [
     "section03",
     "section04",
     "books",
+    "toolbox",
+    "axum_web", 
 ]
 default-members = ["section02"]
 exclude = ["charapp"]
