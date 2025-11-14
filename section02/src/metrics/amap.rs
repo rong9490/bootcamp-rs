@@ -40,6 +40,12 @@ impl AmapMetrics {
         Self { data: arc_map }
     }
 
+    // impl Default for CmapMetrics {
+    //     fn default() -> Self {
+    //         Self { data: Default::default() }
+    //     }
+    // }
+
     pub fn new_mock() -> Self {
         let metrics: AmapMetrics = AmapMetrics::new(&[
             "call.thread.worker.0",
@@ -64,6 +70,30 @@ impl AmapMetrics {
         let counter: &AtomicI64 = counter?; // 自动抛出
         // 计数器加1, 底层原语需要顺序(严格程度)
         counter.fetch_add(1, Ordering::Relaxed);
+        Ok(())
+    }
+}
+
+// 实现Clone行为, 实际是复制一份内部数据data的Arc引用, Arc::clone()
+impl Clone for AmapMetrics {
+    fn clone(&self) -> Self {
+        AmapMetrics {
+            data: Arc::clone(&self.data),
+        }
+    }
+}
+
+// 实现格式化输出fmt::Display, 如何输出展示这个矩阵数据
+impl fmt::Display for AmapMetrics {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let map_iter = self.data.iter(); // 将HashMap转为迭代器
+        map_iter.for_each(|pair| {
+            let (key, value) = pair;
+            // 闭包无法直接使用?操作符抛出错误
+            if let Err(e) = writeln!(f, "{}:: {}", key, value.load(Ordering::Relaxed)) {
+                eprintln!("写入失败: {}", e); // 打印错误，但不中断
+            }
+        });
         Ok(())
     }
 }
