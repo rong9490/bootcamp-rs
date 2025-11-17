@@ -3,16 +3,16 @@
 resolver = "3"
 members = [
     "section01",
-    "section10",
-    "section05",
     "section02",
     "section03",
     "section04",
+    "section05",
+    "section10",
     "books",
     "toolbox",
     "axum_web", 
 ]
-default-members = ["section02"]
+default-members = ["section05"]
 exclude = ["charapp"]
 
 [workspace.dependencies]

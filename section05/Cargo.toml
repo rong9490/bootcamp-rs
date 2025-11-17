@@ -3,6 +3,8 @@ name = "section05"
 version = "0.1.0"
 edition = "2024"
 
+# workspace不能二层嵌套, 用mod替换
+
 [dependencies]
 anyhow.workspace = true
 axum = { workspace = true, features = ["http2", "multipart", "query", "tracing"] }
@@ -17,3 +19,6 @@ utoipa = { version = "4.2.0", features = ["axum_extras", "chrono"] }
 argon2 = { version = "0.5.3", features = ["std"] }
 jwt-simple = "0.12.9"
 chrono = { version = "0.4.38", features = ["serde"] }
+# gpui = "0.2"
+# gpui-component = "0.1"
+gpui = { version = "*" }
