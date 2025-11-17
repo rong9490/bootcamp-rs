@@ -13,3 +13,10 @@
 
   https://github.com/topics/rust-macros
 ```
+
+```
+  减少模板代码
+
+  C语言的宏: 单纯的字符串替换
+  #define MUL(a, b) a * b
+```
