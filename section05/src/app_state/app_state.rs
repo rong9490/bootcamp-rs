@@ -4,6 +4,8 @@ use axum::{Router, routing::get};
 use crate::config::AppConfig;
 use std::{ops::Deref, sync::Arc};
 
+// TODO 重新梳理整理! 代码
+
 // clone很方便, 自带arc --> 但是 访问inner.config, 简化调用 --> Deref Trait --> 自动target指向inner
 // TODO AppState需要保留一份, handler里需要读取 --> 要么实现clone-trait; 要么做成Arc更方便 --> 一个技巧, 做成inner间接引用
 #[derive(Debug, Clone)]
