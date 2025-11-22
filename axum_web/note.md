@@ -4,6 +4,8 @@
 ```
 
 ```aiignore
+    01.[axum init]
+    
     actix / Rocket [宏]/ axum[✅]
     
     Router / Listener / Serve
@@ -27,4 +29,28 @@
     
     方便调试, 使用宏: #[debug_handler]
     无脑加上就行, 方便
+```
+
+```aiignore
+    02.[logger]
+    
+     env_logger 老牌
+     tracing ✅
+     
+     tracing 事件抽象
+     tracing-subscriber 订阅事件
+     
+     unwrap_or_else + 闭包
+     
+    
+```
+
+```aiignore
+    03.[集成配置功能]
+    
+    灵活配置端口号
+    
+    config模块单独声明
+    go语言配置 viper
+    rust语言配置 config
 ```
