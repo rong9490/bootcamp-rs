@@ -1,4 +1,5 @@
 mod server;
+mod database;
 
 use std::sync::LazyLock;
 use anyhow::Context;
@@ -6,6 +7,7 @@ use config::Config;
 use serde::Deserialize;
 pub use server::*;
 use config::FileFormat;
+use crate::config::database::DatabaseConfig;
 
 // 懒加载
 static CONFIG: LazyLock<AppConfig> = LazyLock::new(|| AppConfig::load().expect("failed to initialize config"));
@@ -17,7 +19,8 @@ pub fn get() -> &'static AppConfig {
 
 #[derive(Debug, Deserialize)]
 pub struct AppConfig {
-    pub server: ServerConfig,
+    server: ServerConfig,
+    database: DatabaseConfig,
 }
 
 /// 调用AppConfig::load()的时机: 1.全局静态变量(单例), 在加载时执行; 2.main主流程
@@ -36,5 +39,14 @@ impl AppConfig {
             .build().with_context(|| anyhow::anyhow!("Failed to load config"))?
             .try_deserialize::<AppConfig>().with_context(|| anyhow::anyhow!("Failed to load config"));
         config
+    }
+
+    // 避免移动所有权, 而是返回引用
+    pub fn server(&self) -> &ServerConfig {
+        &self.server
+    }
+
+    pub fn database(&self) -> &DatabaseConfig {
+        &self.database
     }
 }

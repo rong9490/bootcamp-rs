@@ -1,2 +1,9 @@
 server:
   port: 4000
+database:
+  host:
+  port:
+  user:
+  password:
+  database:
+  schema:

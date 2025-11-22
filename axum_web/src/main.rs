@@ -12,7 +12,7 @@ async fn main() {
     logger::init();
     let app_config: &AppConfig = config::get();
     println!("config: {:?}", app_config);
-    let port: u16 = app_config.server.port();
+    let port: u16 = app_config.server().port();
 
     let router: Router = Router::new().route("/", get(index_handler));
     let listener: TcpListener = tokio::net::TcpListener::bind(format!("0.0.0.0:{port}")).await.unwrap();

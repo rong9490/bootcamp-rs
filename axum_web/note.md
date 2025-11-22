@@ -54,3 +54,9 @@
     go语言配置 viper
     rust语言配置 config
 ```
+
+```aiignore
+    04.[ORM集成]
+    
+    sea-orm
+```
