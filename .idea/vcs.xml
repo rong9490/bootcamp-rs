@@ -3,5 +3,10 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/books/src/book_alex_programming/inviting-rust" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/books/src/book_alex_programming/tao-of-rust-codes" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/section05/dummy" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/section05/dummy/target/debug/build/boring-sys-a14280cddc1686fb/out/boringssl" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/section05/dummy/target/debug/build/boring-sys-c4e39a3f59e1588b/out/boringssl" vcs="Git" />
   </component>
 </project>

@@ -1,14 +1,22 @@
-use axum::{
-    routing::get,
-    Router,
-};
+use axum::{debug_handler, routing::get, Router};
+use tokio::net::TcpListener;
 
-#[tokio::main]
+// cargo watch -x "run"
+#[tokio::main] // 展开原理: tokio::runtime::Builder::new_multi_thread
 async fn main() {
-    // build our application with a single route
-    let app = Router::new().route("/", get(|| async { "Hello, World!" }));
+    println!("Hello, axum!");
 
-    // run our app with hyper, listening globally on port 3000
-    let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
-    axum::serve(listener, app).await.unwrap();
+    let router: Router = Router::new().route("/", get(index_handler));
+    let listener: TcpListener = tokio::net::TcpListener::bind("0.0.0.0:4000").await.unwrap();
+
+    println!("Listening on http://0.0.0.0:4000");
+
+    // 底层基于tower, 封装一层: tower -> tokio -> axum
+    // 异步方法 / 可能失败
+    axum::serve(listener, router).await.unwrap();
+}
+
+#[debug_handler] // Generates better error messages when applied to handler functions.
+async fn index_handler() -> &'static str {
+    "Hello, axum!"
 }

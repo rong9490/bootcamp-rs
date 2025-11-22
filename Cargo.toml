@@ -12,7 +12,7 @@ members = [
     "toolbox",
     "axum_web", 
 ]
-default-members = ["section05"]
+default-members = ["axum_web"]
 exclude = ["charapp"]
 
 [workspace.dependencies]
@@ -21,7 +21,7 @@ anyhow = "1.0.99"
 serde = { version = "1.0.219", features = ["derive"] }
 serde_yaml = "0.9.34"
 tokio = { version = "1.36.0", features = ["rt", "rt-multi-thread", "macros", "net", "fs"] }
-axum = { version = "0.7.4", features = ["http2", "query", "tracing"] }
+axum = { version = "0.7.4", features = ["http2", "query", "tracing", "macros"] }
 tracing = "0.1.40"
 tracing-subscriber = { version = "0.3.18", features = ["env-filter"] }
 blake3 = "1.8.2"
