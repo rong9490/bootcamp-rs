@@ -59,4 +59,13 @@
     04.[ORM集成]
     
     sea-orm
+    
+    线程池 / cpu个数 / 
+    db.query_one / 
+```
+
+```aiignore
+    05.[初体验sea_orm]
+    
+    
 ```

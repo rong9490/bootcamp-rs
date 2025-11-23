@@ -1,9 +1,9 @@
 server:
   port: 4000
 database:
-  host:
-  port:
-  user:
-  password:
-  database:
-  schema:
+  host: 127.0.0.1
+  port: 5432
+  user: postgres
+  password: 12345678
+  database: postgres
+  schema: demo
