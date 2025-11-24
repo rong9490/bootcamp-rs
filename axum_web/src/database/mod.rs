@@ -8,7 +8,8 @@ use num_cpus;
 
 pub async fn init() -> anyhow::Result<DatabaseConnection> {
     let database_config = config::get().database();
-    let database_url: String = format!("postgres://{}:{}@{}:{}/{}", database_config.user(), database_config.password(), database_config.host(), database_config.port(), database_config.schema());
+    // "postgres://postgres:postgres123@127.0.0.1:5432/axum".to_string(); ✅
+    let database_url: String = format!("postgres://{}:{}@{}:{}/{}", database_config.user(), database_config.password(), database_config.host(), database_config.port(), database_config.database());
     let mut options = ConnectOptions::new(
         database_url
     );

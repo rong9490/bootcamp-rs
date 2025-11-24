@@ -13,8 +13,11 @@ async fn main() -> anyhow::Result<()> {
     println!("Hello, axum!");
 
     logger::init();
-    let _db: DatabaseConnection = database::init().await?;
 
+    // 创建数据库实例先
+    // 1. postgres ✅
+    // 2. dataset todo
+    let _db: DatabaseConnection = database::init().await?;
     let app_config: &AppConfig = config::get();
     println!("config: {:?}", app_config);
     let port: u16 = app_config.server().port();
