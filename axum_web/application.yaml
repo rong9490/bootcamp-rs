@@ -3,7 +3,7 @@ server:
 database:
   host: 127.0.0.1
   port: 5432
-  user: postgres
-  password: postgres123
-  database: axum
-  schema: demo
+  user: hejj
+  password: pass12345
+  database: postgres
+  schema: public

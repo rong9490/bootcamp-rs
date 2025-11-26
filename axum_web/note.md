@@ -67,5 +67,17 @@
 ```aiignore
     05.[初体验sea_orm]
     
+    命令行安装工具(生成数据实体): sea-orm-cli
+    cargo install sea-orm-cli@1.1.0
     
+    DATABASE_URL=protocol://username:password@localhost/database
+    
+    创建表sys_user, 
+    
+    sea-orm-cli --version
+    sea-orm-cli generate entity
+    
+    sea-orm-cli generate entity --with-serde both --model-extra-attributes 'serde(rename_all = "camelCase")' --date-time-crate chrono -o ./src/entity
+    
+    sea-orm-cli generate entity -s demo --with-serde both --model-extra-attributes 'serde(rename_all = "camelCase")' --date-time-crate chrono -o ./src/entity
 ```
