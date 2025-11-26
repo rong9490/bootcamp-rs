@@ -1,4 +1,4 @@
-use axum::{debug_handler, routing::get, Router};
+use axum::{debug_handler, routing, routing::get, Router};
 use tokio::net::TcpListener;
 use axum_web::logger;
 use axum_web::config;
@@ -22,7 +22,11 @@ async fn main() -> anyhow::Result<()> {
     println!("config: {:?}", app_config);
     let port: u16 = app_config.server().port();
 
-    let router: Router = Router::new().route("/", get(index_handler));
+    let router: Router = Router::new()
+        .route("/", get(index_handler))
+        .route("/users", routing::get(async || {
+            // TODO 此处实现对数据库的查询
+        }));
     let listener: TcpListener = tokio::net::TcpListener::bind(format!("0.0.0.0:{port}")).await?;
     tracing::info!("Listening on http://0.0.0.0:{port}"); // 替代println打印日志
 

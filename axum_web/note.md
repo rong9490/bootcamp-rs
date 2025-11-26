@@ -1,6 +1,7 @@
 ```aiignore
     进军Web开发
     https://www.bilibili.com/video/BV1YpJWzWEjk
+    https://github.com/ilxqx/rust-web-starter
 ```
 
 ```aiignore
@@ -80,4 +81,6 @@
     sea-orm-cli generate entity --with-serde both --model-extra-attributes 'serde(rename_all = "camelCase")' --date-time-crate chrono -o ./src/entity
     
     sea-orm-cli generate entity -s demo --with-serde both --model-extra-attributes 'serde(rename_all = "camelCase")' --date-time-crate chrono -o ./src/entity
+    
+    public / sys_user
 ```

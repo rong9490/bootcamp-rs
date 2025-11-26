@@ -3,9 +3,12 @@
 use sea_orm::entity::prelude::*;
 use serde::{Deserialize, Serialize};
 
+// 实现了序列化和反序列化
+// 重点关注 "DeriveEntityModel" 是什么?
 #[derive(Clone, Debug, PartialEq, DeriveEntityModel, Eq, Serialize, Deserialize)]
-#[sea_orm(schema_name = "public", table_name = "sys_user")]
-#[serde(rename_all = "camelCase")]
+#[sea_orm(schema_name = "public", table_name = "sys_user")] // 默认public模式, 表名sys_user
+#[serde(rename_all = "camelCase")] // 返回给前端时字段做映射(驼峰命名)
+// 暂时缺乏主键: primary_key, auto_increment
 pub struct Model {
     pub name: String,
     pub id: String,
@@ -15,7 +18,7 @@ pub struct Model {
     pub mobile_phone: Option<String>,
     pub birthday: Option<Date>,
     pub enabled: Option<bool>,
-    pub created_at: Option<Time>,
+    pub created_at: Option<Time>, // DateTime
     pub updated_at: Option<Time>,
 }
 
