@@ -13,7 +13,7 @@ pub struct ErrorOutput {
 }
 
 impl ErrorOutput {
-    // impl Into<String>
+    // 参数约束: impl Into<String>
     pub fn new(error: impl Into<String>) -> Self {
         Self {
             error: error.into(),
@@ -57,10 +57,10 @@ pub enum AppError {
 
 // 实现From Trait, 实现隐式转换
 
-// 将Error -> 响应回请求
+// 将Error -> 响应回请求 axum::response::Response
 impl IntoResponse for AppError {
     fn into_response(self) -> Response {
-        let status = match &self {
+        let status: StatusCode = match &self {
             Self::SqlxError(_) => StatusCode::INTERNAL_SERVER_ERROR,
             Self::PasswordHashError(_) => StatusCode::UNPROCESSABLE_ENTITY,
             Self::AnyError(_) => StatusCode::INTERNAL_SERVER_ERROR,
@@ -73,7 +73,7 @@ impl IntoResponse for AppError {
             Self::ChatFileError(_) => StatusCode::BAD_REQUEST,
         };
 
-        // Json序列化 --> 转为响应
+        // StatusCode: Json序列化 --> 转为响应
         (status, Json(ErrorOutput::new(self.to_string()))).into_response()
     }
 }

@@ -9,3 +9,7 @@ pub use app_state::*;
 
 mod handlers;
 pub use handlers::*;
+
+pub mod modules;
+
+pub use modules::User;
