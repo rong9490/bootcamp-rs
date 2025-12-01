@@ -40,7 +40,20 @@
 ```
   开始搭建项目:
   https://u.geekbang.org/lesson/610?article=779626
-
-  tokio / axum / anyhow / thiserror / 
+  tokio / axum / anyhow / thiserror / sqlx
   
+  https://u.geekbang.org/lesson/610?article=779656
+  cargo install sqlx-cli --no-default-features --features rustls --features postgres
+  sqlx命令: database / prepare / migrate / help
+  
+  postgres: / psql / dropdb / createdb / pgcli
+  created chat
+  pgcli python写的工具
+  sqlx migrate add initial 初始化
+  sqlx migrate run  需要环境变量数据库地址
+	
+	select * from _sqlx_migrations;
+	会有version版本划分;
+	
+	cargo install xx -p 指定子项目安装依赖
 ```
