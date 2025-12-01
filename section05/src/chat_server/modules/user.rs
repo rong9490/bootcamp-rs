@@ -1,3 +1,4 @@
+use std::mem;
 use serde::{Serialize, Deserialize};
 use utoipa::ToSchema;
 use argon2::{Argon2, password_hash::{SaltString, rand_core::OsRng, PasswordHash, PasswordHasher, PasswordVerifier}}; // hash加密算法, 及其子变体
@@ -5,6 +6,9 @@ use super::User;
 use crate::chat_server::error::AppError;
 
 // anyhow & thiserror 选择如何处理错误?? thiserror -> axum 自动转换
+//
+// TODO 12月1日星期一, 47:00 下次接着继续看
+// TODO https://u.geekbang.org/lesson/610?article=779656
 
 /// create a user with email and password
 #[derive(Debug, Clone, ToSchema, Serialize, Deserialize)]
@@ -19,6 +23,7 @@ pub struct CreateUser {
     pub password: String,
 }
 
+// 登录时传递的数据结构: email + password
 #[derive(Debug, Clone, ToSchema, Serialize, Deserialize)]
 pub struct SigninUser {
     pub email: String,
@@ -42,10 +47,75 @@ impl User {
     pub async fn find_user_by_id() {}
 
     /// Create a new user
-    pub async fn create_user() {}
+    // TODO: use transaction for workspace creation and user creation
+    pub async fn create_user(&self, input: &CreateUser) -> Result<User, AppError> {
+        // check if email exists
+        let user = self.find_user_by_email(&input.email).await?;
+        if user.is_some() {
+            return Err(AppError::EmailAlreadyExists(input.email.clone()));
+        }
+
+        // check if workspace exists, if not create one
+        let ws = match self.find_workspace_by_name(&input.workspace).await? {
+            Some(ws) => ws,
+            None => self.create_workspace(&input.workspace, 0).await?,
+        };
+
+        let password_hash: String = hash_password(&input.password)?; // 对原始密码进行加密存储
+        let mut user: User = sqlx::query_as(
+            r#"
+            INSERT INTO users (ws_id, email, fullname, password_hash)
+            VALUES ($1, $2, $3, $4)
+            RETURNING id, ws_id, fullname, email, created_at
+            "#,
+        )
+        .bind(ws.id)
+        .bind(&input.email)
+        .bind(&input.fullname)
+        .bind(password_hash)
+        .fetch_one(&self.pool)
+        .await?;
+
+        user.ws_name = ws.name.clone();
+
+        if ws.owner_id == 0 {
+            self.update_workspace_owner(ws.id as _, user.id as _)
+                .await?;
+        }
+
+        Ok(user)
+    }
 
     /// Verify email and password
-    pub async fn verify_user() {}
+    /// SigninUser: 根据email查询user, 然后比对输入的password
+    pub async fn verify_user(&self, input: &SigninUser) -> Result<Option<User>, AppError> {
+        let user: Option<User> = sqlx::query_as(
+            "SELECT id, ws_id, fullname, email, password_hash, created_at FROM users WHERE email = $1",
+        )
+        .bind(&input.email)
+        .fetch_optional(&self.pool)
+        .await?;
+        match user {
+            Some(mut user) => {
+		            // mem::take是什么作用的? 结构体中取走(获得所有权)filed字段, 留下default::Default();
+								// 剩下的数据结构, 就不包含原密码传了
+                let password_hash = mem::take(&mut user.password_hash);
+
+                let is_valid: bool =
+                    verify_password(&input.password, &password_hash.unwrap_or_default())?;
+
+                if is_valid {
+                    // load ws_name, ws should exist
+                    let ws = self.find_workspace_by_id(user.ws_id as _).await?.unwrap();
+                    user.ws_name = ws.name;
+                    Ok(Some(user))
+                } else {
+                    Ok(None)
+                }
+            }
+            None => Ok(None),
+        }
+    }
 
     pub async fn fetch_chat_user_by_ids() {}
 
@@ -68,12 +138,14 @@ fn hash_password(password: &str) -> Result<String, AppError> {
     Ok(password_hash)
 }
 
+// ✅ 校验比较: 用户传递password, 与 数据库读取password_hash比较 (因为不会反向解密password_hash)
 fn verify_password(password: &str, password_hash: &str) -> Result<bool, AppError> {
     let argon2 = Argon2::default();
-    let password_hash = PasswordHash::new(password_hash)?;
+    let password_hash: PasswordHash<'_> = PasswordHash::new(password_hash)?; // 需要转为实例, 再参与比较
 
     // Verify password
-    let is_valid = argon2
+    // password: &[u8]
+    let is_valid: bool = argon2
         .verify_password(password.as_bytes(), &password_hash)
         .is_ok();
 

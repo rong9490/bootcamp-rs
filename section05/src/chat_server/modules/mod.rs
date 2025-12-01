@@ -12,4 +12,7 @@ pub struct User {
 		pub created_at: DateTime<Utc>,
 
 		// 密码: 保存加密前/还是加密后 --> 不加password字段
+		// #[sqlx(default)]
+		// #[serde(skip)]
+		// pub password_hash: Option<String>,
 }
