@@ -5,7 +5,7 @@ use serde::{Deserialize, Serialize};
 
 // 实现了序列化和反序列化
 // 重点关注 "DeriveEntityModel" 是什么?
-#[derive(Clone, Debug, PartialEq, DeriveEntityModel, Eq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[sea_orm(schema_name = "public", table_name = "sys_user")] // 默认public模式, 表名sys_user
 #[serde(rename_all = "camelCase")] // 返回给前端时字段做映射(驼峰命名)
 // 暂时缺乏主键: primary_key, auto_increment

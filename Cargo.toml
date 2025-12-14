@@ -10,7 +10,8 @@ members = [
     "section10",
     "books",
     "toolbox",
-    "axum_web", 
+    "axum_web",
+    "axum_web/dummy"
 ]
 default-members = ["axum_web"]
 exclude = ["charapp"]
