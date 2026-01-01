@@ -1,4 +1,4 @@
-mod database;
+// pub mod entity;
 
 use std::cmp::max;
 use std::time::Duration;
@@ -8,7 +8,7 @@ use num_cpus;
 
 // 开始操作sea相关 -> 后续考虑独立文件
 use sea_orm::prelude::*;
-use crate::entity::prelude::*;
+// use crate::database::entity::prelude::*;
 
 // TODO 补充 postgres 数据库&表的创建
 
@@ -47,4 +47,16 @@ async fn log_database_version(db: &DatabaseConnection) -> anyhow::Result<()> {
     let version_str: String = version.try_get_by_index::<String>(0)?;
     tracing::info!("Database version: {}", version_str);
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[tokio::test]
+    async fn test_database_init() {
+        let db_result = init().await;
+        assert!(db_result.is_ok(), "Database connection failed: {:?}", db_result.err());
+    }
+
 }
