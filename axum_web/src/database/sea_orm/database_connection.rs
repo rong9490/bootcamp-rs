@@ -23,10 +23,10 @@ mod tests {
     #[tokio::test]
     async fn t1() {
         let database_options: ConnectOptions = gen_database_options(Option::None);
-        // print!("{:#?}", database_options);
         let _database_connection = gen_database_connect(database_options).await;
-        // assert_eq!(_database_connection.is_ok(), true);
+        assert_eq!(_database_connection.is_ok(), true);
         let database_connection: DatabaseConnection = _database_connection.unwrap();
+        let _ = database_connection.close().await;
         print!("End!");
     }
 }

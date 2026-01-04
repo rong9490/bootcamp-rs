@@ -40,5 +40,7 @@ mod tests {
     fn t1() {
         let database_url: String = get_database_default_url();
         print!("数据库地址: {}", database_url);
+        let database_options: ConnectOptions = gen_database_options(Option::None);
+        print!("{:#?}", database_options);
     }
 }

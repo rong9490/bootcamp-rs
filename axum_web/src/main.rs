@@ -1,43 +1,23 @@
-use axum::{debug_handler, routing, routing::get, Router};
-use tokio::net::TcpListener;
 use axum_web::logger;
 use axum_web::config;
 use axum_web::config::AppConfig;
-use axum_web::database;
+use axum_web::database::sea_orm::{database_connection_flow};
 use sea_orm::DatabaseConnection;
 use anyhow;
+use axum_web::server::gen_server_listener;
 
 // cargo watch -x "run"
-#[tokio::main] // 展开原理: tokio::runtime::Builder::new_multi_thread
+// 展开原理: tokio::runtime::Builder::new_multi_thread
+#[tokio::main]
 async fn main() -> anyhow::Result<()> {
-    println!("Hello, axum!");
-
     logger::init();
-
     // 创建数据库实例先
-    // 1. postgres ✅
-    // 2. dataset todo
-    let _db: DatabaseConnection = database::init().await?;
+    let _database_connection: DatabaseConnection = database_connection_flow().await?;
     let app_config: &AppConfig = config::get();
-    println!("config: {:?}", app_config);
+    println!("config: {:#?}", app_config);
     let port: u16 = app_config.server().port();
 
-    let router: Router = Router::new()
-        .route("/", get(index_handler))
-        .route("/users", routing::get(async || {
-            // TODO 此处实现对数据库的查询
-        }));
-    let listener: TcpListener = tokio::net::TcpListener::bind(format!("0.0.0.0:{port}")).await?;
+    gen_server_listener(Option::Some(port)).await?;
     tracing::info!("Listening on http://0.0.0.0:{port}"); // 替代println打印日志
-
-    // 底层基于tower, 封装一层: tower -> tokio -> axum
-    // 异步方法 / 可能失败
-    axum::serve(listener, router).await?;
-
     Ok(())
-}
-
-#[debug_handler] // Generates better error messages when applied to handler functions.
-async fn index_handler() -> &'static str {
-    "Hello, axum!"
 }
