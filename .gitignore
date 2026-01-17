@@ -16,3 +16,6 @@ section02/dummy
 dummy
 inviting-rust
 tao-of-rust-codes
+
+# Worktrees
+.worktrees/
