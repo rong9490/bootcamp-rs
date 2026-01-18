@@ -8,6 +8,7 @@ use serde::Deserialize;
 pub use server::*;
 use config::FileFormat;
 use crate::config::database::DatabaseConfig;
+use crate::log::info;
 
 // 懒加载
 static CONFIG: LazyLock<AppConfig> = LazyLock::new(|| AppConfig::load().expect("failed to initialize config"));
@@ -28,14 +29,14 @@ impl AppConfig {
     pub fn load() -> anyhow::Result<Self> {
         // 尝试按优先级加载配置文件：TOML > YAML
         // 只使用找到的第一个配置文件，环境变量始终可以覆盖
-        let config_file = std::path::Path::new("application.toml");
+        let config_file: &std::path::Path = std::path::Path::new("application.toml");
         let (format, file_name) = if config_file.exists() {
             (FileFormat::Toml, "application.toml")
         } else {
             (FileFormat::Yaml, "application.yaml")
         };
 
-        tracing::info!("Loading configuration from: {}", file_name);
+        info!("Loading configuration from: {}", file_name);
 
         let config: Result<AppConfig, anyhow::Error> = Config::builder()
             .add_source(

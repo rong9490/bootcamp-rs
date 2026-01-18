@@ -1,5 +1,6 @@
 use axum::{Router, routing};
 use tokio::net::TcpListener;
+use crate::log::info;
 use super::{
     index_handler,
     router_handle::{
@@ -21,7 +22,11 @@ pub async fn gen_server_listener(_port: Option<u16>) -> anyhow::Result<u16> {
         .route("/items/:id", routing::get(get_item_handler))
         .route("/search", routing::get(search_handler));
 
-    let listener: TcpListener = TcpListener::bind(server_addr).await?;
+    let listener: TcpListener = TcpListener::bind(&server_addr).await?;
+
+    // 在启动服务前输出日志
+    info!("HTTP server listening on http://0.0.0.0:{}", port);
+
     axum::serve(listener, router).await?;
     Ok(port)
 }

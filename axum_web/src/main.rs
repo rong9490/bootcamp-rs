@@ -11,13 +11,17 @@ use axum_web::server::gen_server_listener;
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
     logger::init();
-    // 创建数据库实例先
+
+    // 创建数据库实例
     let _database_connection: DatabaseConnection = database_connection_flow().await?;
+
+    // 加载配置
     let app_config: &AppConfig = config::get();
     println!("config: {:#?}", app_config);
     let port: u16 = app_config.server().port();
 
+    // 启动 HTTP 服务（内部会输出监听日志）
     gen_server_listener(Option::Some(port)).await?;
-    tracing::info!("Listening on http://0.0.0.0:{port}"); // 替代println打印日志
+
     Ok(())
 }
