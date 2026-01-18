@@ -1,0 +1,61 @@
+# Git 相关
+.git
+.gitignore
+.github
+
+# Docker 相关
+Dockerfile*
+.dockerignore
+docker-compose*.yml
+
+# 文档
+*.md
+LICENSE
+
+# 排除其他成员（只保留 axum_web）
+section01/
+section02/
+section03/
+section04/
+section05/
+section10/
+books/
+toolbox/
+charapp/
+legacy/
+.dummys/
+.worktrees/
+
+# 构建产物
+target/
+debug/
+release/
+
+# Cargo 相关（保留 Cargo.lock）
+**/Cargo.lock
+
+# IDE 和编辑器
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# 日志文件
+*.log
+logs/
+
+# 环境变量
+.env
+.env.local
+.env.*.local
+
+# 临时文件
+tmp/
+temp/
+*.tmp
+
+# 数据库文件
+*.db
+*.sqlite

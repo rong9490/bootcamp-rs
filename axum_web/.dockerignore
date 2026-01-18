@@ -1,0 +1,70 @@
+# Git 相关
+.git
+.gitignore
+.github
+
+# Docker 相关
+Dockerfile
+.dockerignore
+docker-compose.yml
+DOCKER.md
+DOCKER_SUMMARY.md
+
+# 文档
+*.md
+LICENSE
+CLAUDE.md
+CONFIG_FORMATS.md
+CONFIG_FORMAT_TESTS.md
+DATABASE_SCHEMA.md
+DATABASE_SETUP.md
+LOGGING_REFACTOR.md
+SCRIPT_COMPARISON.md
+SERVER_LOGGING_OPTIMIZATION.md
+TEST_SCRIPT_COMPARISON.md
+
+# 测试和脚本
+tests/
+test_server_startup.*
+pg_*.sh
+pg_seed_init.*
+schema.sql
+
+# 构建产物
+target/
+debug/
+release/
+
+# Cargo 相关
+Cargo.lock
+**/Cargo.lock
+
+# IDE 和编辑器
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# 日志文件
+*.log
+logs/
+
+# 环境变量
+.env
+.env.local
+.env.*.local
+
+# 临时文件
+tmp/
+temp/
+*.tmp
+
+# 数据库文件
+*.db
+*.sqlite
+
+# 其他
+.worktrees/
+dummy/

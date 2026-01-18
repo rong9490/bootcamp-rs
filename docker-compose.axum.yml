@@ -1,0 +1,59 @@
+services:
+  # PostgreSQL 数据库
+  postgres:
+    image: postgres:16
+    container_name: axum_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: hejj
+      POSTGRES_PASSWORD: pass12345
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./axum_web/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hejj"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - axum_network
+
+  # Axum Web 应用
+  axum_web:
+    build:
+      context: .
+      dockerfile: Dockerfile.axum_web
+    container_name: axum_web_app
+    restart: unless-stopped
+    ports:
+      - "4000:4000"
+    environment:
+      RUST_LOG: info
+      APP_DATABASE_HOST: postgres
+      APP_DATABASE_PORT: 5432
+      APP_DATABASE_USER: hejj
+      APP_DATABASE_PASSWORD: pass12345
+      APP_DATABASE_NAME: postgres
+      APP_DATABASE_SCHEMA: public
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4000/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+    networks:
+      - axum_network
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  axum_network:
+    driver: bridge
