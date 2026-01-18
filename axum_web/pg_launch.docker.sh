@@ -1,6 +1,6 @@
 #! /bin/bash
 
-set +e
+set -e
 
 # 创建开发调试用的PostgreSQL数据库
 docker run \

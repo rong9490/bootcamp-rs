@@ -1,0 +1,10 @@
+[server]
+port = 4000
+
+[database]
+host = "127.0.0.1"
+port = 5432
+user = "hejj"
+password = "pass12345"
+database = "postgres"
+schema = "public"
